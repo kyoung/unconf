@@ -3,7 +3,13 @@
   <title>unconf</title>
 </head>
 <body>
-  <p>Index page template</p>
-  <em>Elm client goes here</em>
+  <div id="main"></div>
+  <script src="main.js"></script>
+  <script>
+      var node = document.getElementById('main');
+      var app = Elm.Main.embed(node);
+      // Note: if your Elm module is named "MyThing.Root" you
+      // would call "Elm.MyThing.Root.embed(node)" instead.
+  </script>
 </body>
 </html>
