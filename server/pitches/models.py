@@ -15,10 +15,13 @@ class Pitch(models.Model):
     author = models.CharField(max_length=64, null=True, blank=True)
     uuid = models.CharField(max_length=32, default=gen_uuid)
 
-    def api_fields(self):
+    def api_fields(self, order=0):
+        # It is easier to explicity order the items in the set server-side
+        # when generating a list of pitches;
+        # parsing dates in Elm on the client is a feat of a Kafkesque nature
         return {
             'text': self.text,
-            'created_at': self.created_at,
+            'order': order,
             'uuid': self.uuid,
         }
 

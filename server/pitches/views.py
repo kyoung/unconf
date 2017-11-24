@@ -8,9 +8,16 @@ from .models import Pitch, Vote
 
 
 def index(request):
-    pitches = {'pitches': [p.api_fields() for p in Pitch.objects.order_by('created_at')]}
+    # we order on the server side to spare ourselves the pain of parsing dates
+    # in Elm on the client side
+    pitches = [
+        p.api_fields(order=i)
+        for i, p
+        in enumerate(Pitch.objects.order_by('created_at'))
+    ]
+    response = {'pitches': pitches}
     return HttpResponse(
-        json.dumps(pitches, cls=DjangoJSONEncoder),
+        json.dumps(response, cls=DjangoJSONEncoder),
         content_type='application/json')
 
 
@@ -31,4 +38,9 @@ def pitch_detail(request, pitch_uuid):
 
 def vote(request):
     sid = request.session.session_key
-    return HttpResponse('Some votes!')
+    votes = Vote.objects.filter(client_id=sid)
+    votes_ids = [v.pitch_id.uuid for v in votes]
+    response = {"votes": votes_ids}
+    return HttpResponse(
+        json.dumps(response, cls=DjangoJSONEncoder),
+        content_type='application/json')

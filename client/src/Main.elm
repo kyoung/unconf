@@ -2,15 +2,20 @@ module Main exposing (..)
 
 import Html exposing (program)
 import State
-import Types
+import Types exposing (Model, Msg(..))
 import View
 
 
-main : Program Never Types.Model Types.Msg
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    Sub.none
+
+
+main : Program Never Model Msg
 main =
     program
         { init = State.init
         , update = State.update
-        , subscriptions = State.subscriptions
+        , subscriptions = subscriptions
         , view = View.root
         }

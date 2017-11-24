@@ -1,12 +1,12 @@
 module Types exposing (..)
 
-import Time exposing (Time)
+import Http
 
 
 type alias Pitch =
-    { pitch : String
-    , id : String
-    , created_at : Time
+    { text : String
+    , uuid : String
+    , order : Int
     }
 
 
@@ -17,9 +17,6 @@ type alias Model =
 
 
 type Msg
-    = OnLoad
-    | GetPitches
-    | GetVotes
-    | GotPitches (Result Http.Error String)
-    | GotVotes (Result Http.Error String)
+    = GotPitches (Result Http.Error (List Pitch))
+    | GotVotes (Result Http.Error (List String))
     | PostVote (Result Http.Error String)
