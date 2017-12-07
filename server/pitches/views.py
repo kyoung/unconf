@@ -1,5 +1,6 @@
 import json
 
+from django.views.decorators.csrf import csrf_exempt
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -36,8 +37,17 @@ def pitch_detail(request, pitch_uuid):
     return HttpResponse(f'A pitch detail for pitch: {pitch}')
 
 
+@csrf_exempt
 def vote(request):
     sid = request.session.session_key
+
+    if request.method == 'POST':
+        payload = json.loads(request.body)
+        uuid = payload.get('pitch_uuid')
+        pitch = Pitch.objects.get(uuid=uuid)
+        new_vote = Vote(client_id=sid, pitch_id=pitch)
+        new_vote.save()
+
     votes = Vote.objects.filter(client_id=sid)
     votes_ids = [v.pitch_id.uuid for v in votes]
     response = {"votes": votes_ids}

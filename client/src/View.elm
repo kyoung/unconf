@@ -2,6 +2,7 @@ module View exposing (..)
 
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
+import Html.Events exposing (onClick)
 import Types exposing (Model, Msg, Pitch)
 
 
@@ -28,5 +29,6 @@ pitchElement votes pitch =
              else
                 "unselected"
             )
+        , onClick (Types.PostVote pitch.uuid)
         ]
         [ text pitch.text ]

@@ -1,6 +1,6 @@
 module State exposing (..)
 
-import Commands exposing (getPitches, getVotes)
+import Commands exposing (castVote, getPitches, getVotes)
 import Types exposing (Model, Msg(..), Pitch)
 
 
@@ -26,8 +26,11 @@ update action model =
         GotVotes (Err _) ->
             ( model, Cmd.none )
 
-        PostVote (Ok votes) ->
-            ( model, Cmd.none )
+        PostVote uuid ->
+            ( model, castVote uuid )
 
-        PostVote (Err _) ->
+        PostedVote (Ok votes) ->
+            ( { model | votes = votes }, Cmd.none )
+
+        PostedVote (Err _) ->
             ( model, Cmd.none )

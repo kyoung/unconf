@@ -19,4 +19,5 @@ type alias Model =
 type Msg
     = GotPitches (Result Http.Error (List Pitch))
     | GotVotes (Result Http.Error (List String))
-    | PostVote (Result Http.Error String)
+    | PostVote String
+    | PostedVote (Result Http.Error (List String))
