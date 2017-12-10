@@ -23,6 +23,7 @@ class Pitch(models.Model):
             'text': self.text,
             'order': order,
             'uuid': self.uuid,
+            'votes': self.vote_set.count(),
         }
 
     def __str__(self):
@@ -35,3 +36,6 @@ class Vote(models.Model):
 
     def __str__(self):
         return f'{self.client_id}:{self.pitch_id}'
+
+    class Meta:
+        unique_together = (('client_id', 'pitch_id'),)

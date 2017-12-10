@@ -7,6 +7,7 @@ type alias Pitch =
     { text : String
     , uuid : String
     , order : Int
+    , votes : Int
     }
 
 

@@ -1,7 +1,7 @@
 module Commands exposing (..)
 
 import Http
-import Json.Decode exposing (Decoder, field, int, list, map3, string)
+import Json.Decode exposing (Decoder, field, int, list, map4, string)
 import Json.Encode exposing (encode, object, string)
 import Types exposing (Model, Msg(..), Pitch)
 
@@ -19,10 +19,11 @@ decodePitches =
 
 decodePitch : Decoder Pitch
 decodePitch =
-    map3 Pitch
+    map4 Pitch
         (field "text" Json.Decode.string)
         (field "uuid" Json.Decode.string)
         (field "order" int)
+        (field "votes" int)
 
 
 getVotes : Cmd Msg

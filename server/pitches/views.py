@@ -1,5 +1,6 @@
 import json
 
+from django.db.utils import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse
@@ -37,6 +38,19 @@ def pitch_detail(request, pitch_uuid):
     return HttpResponse(f'A pitch detail for pitch: {pitch}')
 
 
+def toggle_vote(pitch_uuid, client_id):
+    '''
+    Create a vote is one doesn't exist for this client, or remove it if it does
+    '''
+    pitch = Pitch.objects.get(uuid=pitch_uuid)
+    v = Vote.objects.all().filter(pitch_id=pitch, client_id=client_id)
+    if v.exists():
+        v.delete()
+    else:
+        new_vote = Vote(client_id=client_id, pitch_id=pitch)
+        new_vote.save()
+
+
 @csrf_exempt
 def vote(request):
     sid = request.session.session_key
@@ -44,9 +58,7 @@ def vote(request):
     if request.method == 'POST':
         payload = json.loads(request.body)
         uuid = payload.get('pitch_uuid')
-        pitch = Pitch.objects.get(uuid=uuid)
-        new_vote = Vote(client_id=sid, pitch_id=pitch)
-        new_vote.save()
+        toggle_vote(uuid, sid)
 
     votes = Vote.objects.filter(client_id=sid)
     votes_ids = [v.pitch_id.uuid for v in votes]
