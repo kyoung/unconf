@@ -34,3 +34,6 @@ update action model =
 
         PostedVote (Err _) ->
             ( model, Cmd.none )
+
+        UpdatePitches time ->
+            ( model, getPitches )

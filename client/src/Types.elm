@@ -1,6 +1,7 @@
 module Types exposing (..)
 
 import Http
+import Time exposing (..)
 
 
 type alias Pitch =
@@ -22,3 +23,4 @@ type Msg
     | GotVotes (Result Http.Error (List String))
     | PostVote String
     | PostedVote (Result Http.Error (List String))
+    | UpdatePitches Time
