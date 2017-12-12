@@ -42,6 +42,15 @@ body {
   }
 }
 
+@keyframes popin-font {
+  0% {
+    font-size: 0.01em;
+  }
+  100% {
+    font-size: 0.5em;
+  }
+}
+
 .unselected {
   border-top: 10px solid white;
 }
@@ -65,8 +74,8 @@ body {
   font-size: 0.5em;
   letter-spacing: 3px;
 
-  animation-name: popin;
-  animation-duration: 0.25s;
+  animation-name: popin-font;
+  animation-duration: 0.15s;
   animation-timing-function: ease-in;
   animation-delay: 0;
 }

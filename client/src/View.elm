@@ -42,5 +42,10 @@ pitchElement votes pitch =
                 text ""
             ]
         , p [] [ text pitch.text ]
-        , p [ class "vote-dots" ] [ text (List.foldr (++) "" (List.repeat pitch.votes "⬤")) ]
+        , p [] (List.map voteDot (List.repeat pitch.votes ""))
         ]
+
+
+voteDot : String -> Html Msg
+voteDot vote =
+    span [ class "vote-dots" ] [ text "⬤" ]
