@@ -39,3 +39,8 @@ class Vote(models.Model):
 
     class Meta:
         unique_together = (('client_id', 'pitch_id'),)
+
+
+class Room(models.Model):
+    number = models.CharField(max_length=16)
+    capacity = models.IntegerField()
