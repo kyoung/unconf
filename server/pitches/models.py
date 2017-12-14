@@ -44,3 +44,6 @@ class Vote(models.Model):
 class Room(models.Model):
     number = models.CharField(max_length=16)
     capacity = models.IntegerField()
+
+    def __str__(self):
+        return f'{self.number} - {self.capacity}'
