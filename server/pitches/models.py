@@ -46,4 +46,21 @@ class Room(models.Model):
     capacity = models.IntegerField()
 
     def __str__(self):
-        return f'{self.number} - {self.capacity}'
+        return f'{self.number} ({self.capacity})'
+
+
+class Slot(models.Model):
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+
+    def __str__(self):
+        return f'{self.start_time} - {self.end_time}'
+
+
+class Schedule(models.Model):
+    pitch = models.ForeignKey(Pitch, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    slot = models.ForeignKey(Slot, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.room} {self.slot}: {self.pitch}'
