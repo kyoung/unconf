@@ -46,7 +46,7 @@ class Room(models.Model):
     capacity = models.IntegerField()
 
     def __str__(self):
-        return f'{self.number} ({self.capacity})'
+        return f'{self.number} (capacity {self.capacity})'
 
 
 class Slot(models.Model):
@@ -63,7 +63,7 @@ class Schedule(models.Model):
     slot = models.ForeignKey(Slot, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.room} {self.slot}: {self.pitch}'
+        return f'Room: {self.room} ({self.slot}): {self.pitch}'
 
 
 class Flag(models.Model):

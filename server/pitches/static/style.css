@@ -103,3 +103,14 @@ body {
 .no-pitches {
   font-size: 3em;
 }
+
+.input-button {
+  cursor: pointer;
+  border: 1px solid #999;
+  border-radius: 5px;
+  padding: 5px 10px 5px 10px;
+}
+
+.input-button:hover {
+  color: black;
+}
