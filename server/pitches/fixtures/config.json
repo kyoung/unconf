@@ -1,0 +1,10 @@
+[
+  {
+    "model": "pitches.Flag",
+    "pk": 1,
+    "fields": {
+      "name": "Allow Pitches",
+      "enabled": "False"
+    }
+  }
+]

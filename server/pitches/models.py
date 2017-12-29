@@ -64,3 +64,11 @@ class Schedule(models.Model):
 
     def __str__(self):
         return f'{self.room} {self.slot}: {self.pitch}'
+
+
+class Flag(models.Model):
+    name = models.CharField(max_length=32)
+    enabled = models.BooleanField()
+
+    def __str__(self):
+        return f'{self.name}: {self.enabled}'
