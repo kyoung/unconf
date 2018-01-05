@@ -26,6 +26,17 @@ class Pitch(models.Model):
             'votes': self.vote_set.count(),
         }
 
+    def merge(self, other):
+        self.text += f'\n-------\n{other.text}'
+        self.save()
+        self_client_votes = [v.client_id for v in self.vote_set.iterator()]
+        other_client_votes = [v.client_id for v in other.vote_set.iterator()]
+        self.vote_set.all().delete()
+        for client_id in set(self_client_votes + other_client_votes):
+            v = Vote(client_id=client_id, pitch_id=self)
+            v.save()
+        other.delete()
+
     def __str__(self):
         return self.text
 
