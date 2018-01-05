@@ -1,12 +1,14 @@
 import json
 
-from django.db.utils import IntegrityError
-from django.views.decorators.csrf import csrf_exempt
+from django.contrib.admin.views.decorators import staff_member_required
 from django.core.serializers.json import DjangoJSONEncoder
+from django.db.utils import IntegrityError
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 
-from .models import Pitch, Vote
+from .models import Pitch, Vote, Schedule, Slot
+from .utils import reschedule
 
 
 def index(request):
@@ -66,3 +68,20 @@ def vote(request):
     return HttpResponse(
         json.dumps(response, cls=DjangoJSONEncoder),
         content_type='application/json')
+
+
+@staff_member_required
+def set_schedule(request):
+    '''
+    Display a list of the current schedule; allow a POST to trigger a "reflow"
+    of the schedule algorithm.
+
+    End users will see the schedule displayed in the client app at / once
+    voting closes and the 'Display Schedule' flag is set.
+    '''
+
+    if request.method == 'POST':
+        reschedule()
+
+    ctx = {"slots": Slot.objects.all().order_by('start_time')}
+    return render(request, 'pitches/templates/schedule_admin.html.tmpl', ctx)

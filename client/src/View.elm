@@ -27,15 +27,19 @@ listPitches model =
 pitchElement : List String -> Pitch -> Html Msg
 pitchElement votes pitch =
     div
-        [ class
-            (if List.member pitch.uuid votes then
-                "selected"
-             else
-                "unselected"
-            )
+        [ class "pitch"
         , onClick (Types.PostVote pitch.uuid)
         ]
-        [ span [ class "select-notice" ]
+        [ div
+            [ class
+                (if List.member pitch.uuid votes then
+                    "selected"
+                 else
+                    "unselected"
+                )
+            ]
+            []
+        , span [ class "select-notice" ]
             [ if List.member pitch.uuid votes then
                 text "selected"
               else

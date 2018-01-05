@@ -39,3 +39,36 @@ class Vote(models.Model):
 
     class Meta:
         unique_together = (('client_id', 'pitch_id'),)
+
+
+class Room(models.Model):
+    number = models.CharField(max_length=16)
+    capacity = models.IntegerField()
+
+    def __str__(self):
+        return f'{self.number} (capacity {self.capacity})'
+
+
+class Slot(models.Model):
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+
+    def __str__(self):
+        return f'{self.start_time} - {self.end_time}'
+
+
+class Schedule(models.Model):
+    pitch = models.ForeignKey(Pitch, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    slot = models.ForeignKey(Slot, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Room: {self.room} ({self.slot}): {self.pitch}'
+
+
+class Flag(models.Model):
+    name = models.CharField(max_length=32)
+    enabled = models.BooleanField()
+
+    def __str__(self):
+        return f'{self.name}: {self.enabled}'

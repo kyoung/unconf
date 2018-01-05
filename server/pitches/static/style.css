@@ -16,7 +16,7 @@ body {
   align-items: center;
 }
 
-.selected, .unselected {
+.pitch {
   position: relative;
   box-shadow: 0 1px 4px 0 rgba(12, 12, 13, 0.4);
   cursor: pointer;
@@ -26,14 +26,13 @@ body {
   margin-bottom: 20px;
   padding: 20px 10px 20px 10px;
 
-  animation-name: popin;
+  animation-name: pitch-in;
   animation-duration: 0.25s;
   animation-timing-function: ease-in;
   animation-delay: 0;
-
 }
 
-@keyframes popin {
+@keyframes pitch-in {
   0% {
     transform: scale(0.1);
   }
@@ -42,13 +41,11 @@ body {
   }
 }
 
-@keyframes popin-font {
-  0% {
-    font-size: 0.01em;
-  }
-  100% {
-    font-size: 0.5em;
-  }
+.unselected, .selected {
+  width: calc(100% + 20px);
+  left: -10px;
+  top: -20px;
+  position: relative;
 }
 
 .unselected {
@@ -56,12 +53,26 @@ body {
 }
 
 .selected {
-  border-top: 10px solid #5959ad;
+  border-top: 10px solid #3572A5;
+
+  animation-name: selected-in;
+  animation-duration: 0.25s;
+  animation-timing-function: ease-in;
+  animation-delay: 0;
+}
+
+@keyframes selected-in {
+  0% {
+    border-top-color: white;
+  }
+  100% {
+    border-top-color: #3572A5;
+  }
 }
 
 .select-notice {
   position: absolute;
-  top: -10px;
+  top: 0px;
   right: 0;
   line-height: 10px;
   text-transform: uppercase;
@@ -80,6 +91,26 @@ body {
   animation-delay: 0;
 }
 
+@keyframes popin-font {
+  0% {
+    font-size: 0.01em;
+  }
+  100% {
+    font-size: 0.5em;
+  }
+}
+
 .no-pitches {
   font-size: 3em;
+}
+
+.input-button {
+  cursor: pointer;
+  border: 1px solid #999;
+  border-radius: 5px;
+  padding: 5px 10px 5px 10px;
+}
+
+.input-button:hover {
+  color: black;
 }

@@ -1,0 +1,27 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>unconf - schedule</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+  <div class='schedule'>
+    {% for slot in slots %}
+      <h2>{{ slot }}</h2>
+      <ul>
+      {% for talk in slot.schedule_set.all %}
+        <li>{{ talk }}</li>
+      {% endfor %}
+    </ul>
+    {% endfor %}
+  </div>
+  <div class='reflow'>
+    <form method='post'>
+      {% csrf_token %}
+      <input class="input-button" type="submit" value="Reshuffle the schedule">
+    </form>
+  </div>
+</body>
+</html>
