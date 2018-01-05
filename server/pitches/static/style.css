@@ -25,6 +25,7 @@ body {
   text-align: center;
   margin-bottom: 20px;
   padding: 20px 10px 20px 10px;
+  white-space: pre;
 
   animation-name: pitch-in;
   animation-duration: 0.25s;

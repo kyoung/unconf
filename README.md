@@ -24,5 +24,4 @@ Once started you will want to configure a superuser for Django administration:
 
 ## TODO
 - [ ] Production DB env var handling
-- [ ] The ability to collapse related pitches
 - [ ] Get a designer to look everything over
