@@ -24,7 +24,5 @@ Once started you will want to configure a superuser for Django administration:
 
 ## TODO
 - [ ] Production DB env var handling
-- [ ] Rooms and capacity models for the admins
-- [ ] Basic schedule planning for talks by votes
 - [ ] The ability to collapse related pitches
 - [ ] Get a designer to look everything over
