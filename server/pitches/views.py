@@ -32,7 +32,7 @@ def pitch(request):
     p.save()
     return HttpResponse(
         json.dumps(p.api_fields(), cls=DjangoJSONEncoder),
-        content_type='application/json' )
+        content_type='application/json')
 
 
 def pitch_detail(request, pitch_uuid):
