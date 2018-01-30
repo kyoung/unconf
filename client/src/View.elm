@@ -46,7 +46,7 @@ pitchElement votes pitch =
                 text ""
             ]
         , p [] [ text pitch.text ]
-        , p [] (List.map voteDot (List.repeat pitch.votes ""))
+        , div [ class "voting-dots" ] (List.map voteDot (List.repeat pitch.votes ""))
         ]
 
 

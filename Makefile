@@ -13,4 +13,4 @@ install:
 
 .PHONY: run
 run: client
-	source venv/bin/activate; pushd server; python manage.py runserver 8080
+	source venv/bin/activate; pushd server; python manage.py runserver 0.0.0.0:8080

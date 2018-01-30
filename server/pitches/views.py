@@ -55,6 +55,9 @@ def toggle_vote(pitch_uuid, client_id):
 
 @csrf_exempt
 def vote(request):
+    if not request.session.get('has_session'):
+        request.session['has_session'] = True
+
     sid = request.session.session_key
 
     if request.method == 'POST':
