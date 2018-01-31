@@ -6,13 +6,5 @@
       "name": "Allow Pitches",
       "enabled": "True"
     }
-  },
-  {
-    "model": "pitches.Flag",
-    "pk": 2,
-    "fields": {
-      "name": "Display Schedule",
-      "enabled": "False"
-    }
   }
 ]

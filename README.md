@@ -24,6 +24,4 @@ Once started you will want to configure a superuser for Django administration:
 
 ## TODO
 - [ ] Production DB env var handling
-- [ ] Release "Schedule" to client; client side schedule display when voting is
-      complete
 - [ ] Get a designer to look everything over

@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import Pitch, Vote, Schedule, Slot
+from .models import Pitch, Vote, Schedule, Slot, Flag
 from .utils import reschedule
 
 
@@ -40,6 +40,14 @@ def pitch_detail(request, pitch_uuid):
     return HttpResponse(f'A pitch detail for pitch: {pitch}')
 
 
+def mode(request):
+    flag = Flag.objects.get(name='Allow Pitches')
+    mode = 'Pitching' if flag.enabled else 'Schedule'
+    return HttpResponse(
+        json.dumps({'mode': mode}),
+        content_type='application/json')
+
+
 def toggle_vote(pitch_uuid, client_id):
     '''
     Create a vote is one doesn't exist for this client, or remove it if it does
@@ -55,6 +63,9 @@ def toggle_vote(pitch_uuid, client_id):
 
 @csrf_exempt
 def vote(request):
+    if not request.session.get('has_session'):
+        request.session['has_session'] = True
+
     sid = request.session.session_key
 
     if request.method == 'POST':
@@ -85,3 +96,14 @@ def set_schedule(request):
 
     ctx = {"slots": Slot.objects.all().order_by('start_time')}
     return render(request, 'pitches/templates/schedule_admin.html.tmpl', ctx)
+
+
+def schedule(request):
+    schedule = {"slots": [
+            s.api_fields() for s
+            in Schedule.objects.all().order_by('slot__start_time')
+        ]
+    }
+    return HttpResponse(
+        json.dumps(schedule, cls=DjangoJSONEncoder),
+        content_type='application/json')
