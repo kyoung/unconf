@@ -2,6 +2,4 @@
 db.sqlite3
 venv
 elm-stuff
-# do not put the compiled client in git
-server/pitches/static/main.js
 .ropeproject
