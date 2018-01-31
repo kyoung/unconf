@@ -33,7 +33,8 @@ DEBUG = bool(os.getenv('DEBUG', 'True'))
 ALLOWED_HOSTS = [
     '192.168.1.66',
     '192.168.1.68',
-    '127.0.0.1'
+    '127.0.0.1',
+    'devopsdays-yvr-voting.herokuapp.com'
 ]
 
 
