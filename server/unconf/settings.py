@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
+import dj_database_url
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -20,10 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '8wjd)7a%_7n-58md%%jwg9h!80upf^poh_oie)w8i^1ziqvbmj'
+SECRET_KEY = os.getenv(
+    'SECRET_KEY',
+    '8wjd)7a%_7n-58md%%jwg9h!80upf^poh_oie)w8i^1ziqvbmj')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.getenv('DEBUG', 'True'))
 
 ALLOWED_HOSTS = [
     '192.168.1.66',
@@ -78,12 +83,16 @@ WSGI_APPLICATION = 'unconf.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
+DB_CONN = os.getenv('DATABASE_URL')
+psql_config = dj_database_url(DB_CONN)
+sqlite3_config = {
+    'ENGINE': 'django.db.backends.sqlite3',
+    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+}
+
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': psql_config if DB_CONN else sqlite3_config
 }
 
 

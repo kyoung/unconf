@@ -1,1 +1,2 @@
 Django==2.0
+dj-database-url==0.4.2
