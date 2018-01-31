@@ -1,12 +1,12 @@
 module State exposing (..)
 
-import Commands exposing (castVote, getPitches, getVotes)
-import Types exposing (Model, Msg(..), Pitch)
+import Commands exposing (castVote, getMode, getPitches, getSchedule, getVotes)
+import Types exposing (Mode(..), Model, Msg(..), Pitch)
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( { pitches = [], votes = [] }
+    ( { pitches = [], votes = [], schedule = [], mode = Pitching }
     , Cmd.batch [ getPitches, getVotes ]
     )
 
@@ -35,5 +35,29 @@ update action model =
         PostedVote (Err _) ->
             ( model, Cmd.none )
 
-        UpdatePitches time ->
-            ( model, getPitches )
+        UpdateMode time ->
+            ( model, getMode )
+
+        GotMode (Ok mode) ->
+            let
+                newMode =
+                    if mode == "Schedule" then
+                        Schedule
+                    else
+                        Pitching
+            in
+            ( { model | mode = newMode }
+            , if newMode == Pitching then
+                getPitches
+              else
+                getSchedule
+            )
+
+        GotMode (Err _) ->
+            ( model, Cmd.none )
+
+        GotSchedule (Ok schedule) ->
+            ( { model | schedule = schedule }, Cmd.none )
+
+        GotSchedule (Err _) ->
+            ( model, Cmd.none )

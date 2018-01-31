@@ -122,3 +122,41 @@ body {
 .input-button:hover {
   color: black;
 }
+
+.schedule {
+  display: flex;
+  flex-direction: column;
+}
+
+.schedule-header {
+  font-size: 2em;
+  font-style: bold;
+  padding: 0 10px 0 10px;
+}
+
+.slot-text {
+  padding: 0 10px 0 10px;
+  white-space: pre;
+}
+
+.slot-time-block {
+  margin-top: 40px;
+}
+
+.slot-time {
+  background-color: #333;
+  color: white;
+  padding: 0 10px 0 10px;
+}
+
+.slot-room {
+  font-size: 0.8em;
+  color: #666;
+  padding: 0 10px 0 10px;
+}
+
+.slot {
+  margin-top: 20px;
+  border-bottom: 1px solid #ddd;
+  padding: 0 0 10px 0;
+}

@@ -3,13 +3,52 @@ module View exposing (..)
 import Html exposing (Html, div, p, span, text)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
-import Types exposing (Model, Msg, Pitch)
+import Set
+import Types exposing (Mode(..), Model, Msg, Pitch, Slot)
 
 
 root : Model -> Html Msg
 root model =
-    div []
-        [ listPitches model ]
+    if model.mode == Pitching then
+        div []
+            [ listPitches model ]
+    else
+        div [] [ listSchedule model ]
+
+
+listSchedule : Model -> Html Msg
+listSchedule model =
+    let
+        times =
+            List.map (\s -> s.time) model.schedule
+                |> Set.fromList
+                |> Set.toList
+    in
+    div [ class "schedule" ]
+        (List.append
+            [ div [ class "schedule-header" ] [ text "Schedule" ] ]
+            (List.map (displayTimes model.schedule) times)
+        )
+
+
+displayTimes : List Slot -> String -> Html Msg
+displayTimes slots time =
+    div [ class "slot-time-block" ]
+        (List.append
+            [ div [ class "slot-time" ] [ text time ] ]
+            (List.map
+                displaySlot
+                (List.filter (\c -> c.time == time) slots)
+            )
+        )
+
+
+displaySlot : Slot -> Html Msg
+displaySlot slot =
+    div [ class "slot" ]
+        [ div [ class "slot-room" ] [ text slot.room ]
+        , div [ class "slot-text" ] [ text slot.text ]
+        ]
 
 
 listPitches : Model -> Html Msg

@@ -73,6 +73,13 @@ class Schedule(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     slot = models.ForeignKey(Slot, on_delete=models.CASCADE)
 
+    def api_fields(self):
+        return {
+            'text': self.pitch.text,
+            'room': self.room.number,
+            'time': self.slot.start_time 
+        }
+
     def __str__(self):
         return f'Room: {self.room} ({self.slot}): {self.pitch}'
 
