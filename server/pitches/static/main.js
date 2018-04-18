@@ -9274,7 +9274,7 @@ var _ksyoung$unconf$State$update = F2(
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{pitches: _p0._0._0}),
-						_1: _elm_lang$core$Platform_Cmd$none
+						_1: _ksyoung$unconf$Commands$getVotes
 					};
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};

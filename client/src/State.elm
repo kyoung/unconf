@@ -15,7 +15,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update action model =
     case action of
         GotPitches (Ok pitches) ->
-            ( { model | pitches = pitches }, Cmd.none )
+            ( { model | pitches = pitches }, getVotes )
 
         GotPitches (Err _) ->
             ( model, Cmd.none )
