@@ -9586,28 +9586,60 @@ var _ksyoung$unconf$View$listSchedule = function (model) {
 			_0: _elm_lang$html$Html_Attributes$class('schedule'),
 			_1: {ctor: '[]'}
 		},
-		A2(
-			_elm_lang$core$List$append,
+		_elm_lang$core$List$concat(
 			{
 				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$div,
-					{
+				_0: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('schedule-header'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('Schedule'),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				},
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$core$List$map,
+						_ksyoung$unconf$View$displayTimes(model.schedule),
+						times),
+					_1: {
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('schedule-header'),
+						_0: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('schedule-map'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$img,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$src('/static/dodyvr-map-2018.png'),
+											_1: {ctor: '[]'}
+										},
+										{ctor: '[]'}),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						},
 						_1: {ctor: '[]'}
-					},
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html$text('Schedule'),
-						_1: {ctor: '[]'}
-					}),
-				_1: {ctor: '[]'}
-			},
-			A2(
-				_elm_lang$core$List$map,
-				_ksyoung$unconf$View$displayTimes(model.schedule),
-				times)));
+					}
+				}
+			}));
 };
 var _ksyoung$unconf$View$root = function (model) {
 	return _elm_lang$core$Native_Utils.eq(model.mode, _ksyoung$unconf$Types$Pitching) ? A2(

@@ -1,7 +1,7 @@
 module View exposing (..)
 
-import Html exposing (Html, div, p, span, text)
-import Html.Attributes exposing (class)
+import Html exposing (Html, div, img, p, span, text)
+import Html.Attributes exposing (class, src)
 import Html.Events exposing (onClick)
 import Set
 import Types exposing (Mode(..), Model, Msg, Pitch, Slot)
@@ -25,9 +25,13 @@ listSchedule model =
                 |> Set.toList
     in
     div [ class "schedule" ]
-        (List.append
-            [ div [ class "schedule-header" ] [ text "Schedule" ] ]
-            (List.map (displayTimes model.schedule) times)
+        (List.concat
+            [ [ div [ class "schedule-header" ] [ text "Schedule" ] ]
+            , List.map
+                (displayTimes model.schedule)
+                times
+            , [ div [ class "schedule-map" ] [ img [ src "/static/dodyvr-map-2018.png" ] [] ] ]
+            ]
         )
 
 
