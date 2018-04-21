@@ -20,11 +20,10 @@ def index(request):
     if cache_pitches:
         pitches = cache_pitches
     else:
-        # requested random order to distribute the probabilities of votes
         pitches = [
-            p.api_fields(order=int(random.random() * 100))
-            for p
-            in Pitch.objects.order_by('created_at')
+            p.api_fields(order=i)
+            for i, p
+            in enumerate(Pitch.objects.order_by('created_at'))
         ]
         cache.set('pitches', pitches)
     response = {'pitches': pitches}
