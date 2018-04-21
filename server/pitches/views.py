@@ -1,4 +1,5 @@
 import json
+import random
 
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.serializers.json import DjangoJSONEncoder
@@ -19,6 +20,7 @@ def index(request):
         for i, p
         in enumerate(Pitch.objects.order_by('created_at'))
     ]
+    random.shuffle(pitches)  # requested to distribute the probabilities of votes
     response = {'pitches': pitches}
     return HttpResponse(
         json.dumps(response, cls=DjangoJSONEncoder),
