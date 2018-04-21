@@ -2,6 +2,7 @@ import json
 import random
 
 from django.contrib.admin.views.decorators import staff_member_required
+from django.core.cache import cache
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.utils import IntegrityError
 from django.http import HttpResponse
@@ -15,12 +16,17 @@ from .utils import reschedule
 def index(request):
     # we order on the server side to spare ourselves the pain of parsing dates
     # in Elm on the client side
-    pitches = [
-        p.api_fields(order=i)
-        for i, p
-        in enumerate(Pitch.objects.order_by('created_at'))
-    ]
-    random.shuffle(pitches)  # requested to distribute the probabilities of votes
+    cache_pitches = cache.get('pitches', None)
+    if cache_pitches:
+        pitches = cache_pitches
+    else:
+        # requested random order to distribute the probabilities of votes
+        pitches = [
+            p.api_fields(order=int(random.random() * 100))
+            for p
+            in Pitch.objects.order_by('created_at')
+        ]
+        cache.set('pitches', pitches)
     response = {'pitches': pitches}
     return HttpResponse(
         json.dumps(response, cls=DjangoJSONEncoder),
@@ -43,8 +49,13 @@ def pitch_detail(request, pitch_uuid):
 
 
 def mode(request):
-    flag = Flag.objects.get(name='Allow Pitches')
-    mode = 'Pitching' if flag.enabled else 'Schedule'
+    cache_mode = cache.get('mode', None)
+    if cache_mode:
+        mode = cache_mode
+    else:
+        flag = Flag.objects.get(name='Allow Pitches')
+        mode = 'Pitching' if flag.enabled else 'Schedule'
+        cache.set('mode', mode)
     return HttpResponse(
         json.dumps({'mode': mode}),
         content_type='application/json')
@@ -75,8 +86,14 @@ def vote(request):
         uuid = payload.get('pitch_uuid')
         toggle_vote(uuid, sid)
 
-    votes = Vote.objects.filter(client_id=sid)
-    votes_ids = [v.pitch_id.uuid for v in votes]
+    cached_vote_ids = cache.get('votes_ids', None)
+    if cached_vote_ids:
+        votes_ids = cached_vote_ids
+    else:
+        votes = Vote.objects.filter(client_id=sid)
+        votes_ids = [v.pitch_id.uuid for v in votes]
+        cache.set('votes', votes_ids)
+
     response = {"votes": votes_ids}
     return HttpResponse(
         json.dumps(response, cls=DjangoJSONEncoder),
@@ -101,11 +118,16 @@ def set_schedule(request):
 
 
 def schedule(request):
-    schedule = {"slots": [
-            s.api_fields() for s
-            in Schedule.objects.all().order_by('slot__start_time')
-        ]
-    }
+    cache_schedule = cache.get('schedule', None)
+    if cache_schedule:
+        schedule = cache_schedule
+    else:
+        schedule = {"slots": [
+                s.api_fields() for s
+                in Schedule.objects.all().order_by('slot__start_time')
+            ]
+        }
+        cache.set('schedule', schedule)
     return HttpResponse(
         json.dumps(schedule, cls=DjangoJSONEncoder),
         content_type='application/json')
