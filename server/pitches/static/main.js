@@ -9660,7 +9660,7 @@ var _ksyoung$unconf$View$root = function (model) {
 };
 
 var _ksyoung$unconf$Main$subscriptions = function (model) {
-	return A2(_elm_lang$core$Time$every, _elm_lang$core$Time$second * 5, _ksyoung$unconf$Types$UpdateMode);
+	return A2(_elm_lang$core$Time$every, _elm_lang$core$Time$second * 2, _ksyoung$unconf$Types$UpdateMode);
 };
 var _ksyoung$unconf$Main$main = _elm_lang$html$Html$program(
 	{init: _ksyoung$unconf$State$init, update: _ksyoung$unconf$State$update, subscriptions: _ksyoung$unconf$Main$subscriptions, view: _ksyoung$unconf$View$root})();

@@ -136,7 +136,7 @@ USE_TZ = True
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'TIMEOUT': 15,
+        'TIMEOUT': 5,
     }
 }
 
