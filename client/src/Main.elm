@@ -9,7 +9,7 @@ import View
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Time.every (Time.second * 15) UpdateMode
+    Time.every (Time.second * 5) UpdateMode
 
 
 main : Program Never Model Msg
