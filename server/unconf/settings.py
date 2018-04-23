@@ -30,12 +30,9 @@ SECRET_KEY = os.getenv(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.getenv('DEBUG', 'True'))
 
+host = os.getenv('HOSTNAME', '127.0.0.1')
 ALLOWED_HOSTS = [
-    '192.168.1.66',
-    '192.168.1.68',
-    '127.0.0.1',
-    'devopsdays-yvr-voting.herokuapp.com',
-    'dodyvr-admin.herokuapp.com'
+    host,
 ]
 
 
