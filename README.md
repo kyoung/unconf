@@ -66,6 +66,11 @@ exactly your app's name, or to `0.0.0.0` to allow any hostnames.
 This should be set automatically by Heroku when Postgres is added. Leave it
 empty for local dev to get Djano to use a local SQLite3.
 
+#### COLLAPSE_SEPARATOR
+If you don't fancy the `-` string that appears between two pitches when they
+are collapsed together, you may set this envvar to a string of your choice.
+
+I leave newline escaping as an exercise for the reader.
 
 ## About the Security Model
 unconf is designed to replace sticky notes and dots with a sharpie marker. As

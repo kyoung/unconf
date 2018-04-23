@@ -1,8 +1,12 @@
 import datetime
+import os
 import uuid
 
 from django.db import models
 from django.utils import timezone
+
+
+COLLAPSE_SEPARATOR = os.getenv('COLLAPSE_SEPARATOR', '\n-------\n')
 
 
 def gen_uuid():
@@ -27,7 +31,7 @@ class Pitch(models.Model):
         }
 
     def merge(self, other):
-        self.text += f'\n-------\n{other.text}'
+        self.text += f'{COLLAPSE_SEPARATOR}{other.text}'
         self.save()
         self_client_votes = [v.client_id for v in self.vote_set.iterator()]
         other_client_votes = [v.client_id for v in other.vote_set.iterator()]
@@ -77,7 +81,7 @@ class Schedule(models.Model):
         return {
             'text': self.pitch.text,
             'room': self.room.number,
-            'time': self.slot.start_time 
+            'time': self.slot.start_time
         }
 
     def __str__(self):

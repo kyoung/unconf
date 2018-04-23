@@ -23,7 +23,7 @@ Time slots are input next, at `/admin/pitches/slot/`. Enter as many time slots
 as you like, with a start time and end time, in 24hr format.
 
 ## Map
-<documentation pending once this is implemented>
+_documentation pending once this is implemented__
 
 ## Pitches (aka the performative part)
 The intended flow is to transcribe the pitches as they are made and input them
@@ -46,7 +46,7 @@ simply select the two pitches, and then under the `Actions` drop down, select
 "Collapse Pitches". This will intelligently combine the set of votes, and
 concatenate the two pitches.
 
-<documentation pending on customizing the concatenation string>
+_documentation pending on customizing the concatenation string_
 
 ## Setting the schedule
 As voting gets underway, you may like to begin planning the schedule. To do so

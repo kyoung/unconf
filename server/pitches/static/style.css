@@ -148,7 +148,7 @@ body {
 
 .slot-text {
   padding: 0 10px 0 10px;
-  white-space: pre;
+  white-space: pre-wrap;
 }
 
 .slot-time-block {

@@ -10,7 +10,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Pitch, Vote, Schedule, Slot, Flag
-from .utils import reschedule
+from .utils import reschedule, get_mode, toggle_vote
 
 
 def index(request):
@@ -48,29 +48,10 @@ def pitch_detail(request, pitch_uuid):
 
 
 def mode(request):
-    cache_mode = cache.get('mode', None)
-    if cache_mode:
-        mode = cache_mode
-    else:
-        flag = Flag.objects.get(name='Allow Pitches')
-        mode = 'Pitching' if flag.enabled else 'Schedule'
-        cache.set('mode', mode)
+    mode = get_mode()
     return HttpResponse(
         json.dumps({'mode': mode}),
         content_type='application/json')
-
-
-def toggle_vote(pitch_uuid, client_id):
-    '''
-    Create a vote is one doesn't exist for this client, or remove it if it does
-    '''
-    pitch = Pitch.objects.get(uuid=pitch_uuid)
-    v = Vote.objects.all().filter(pitch_id=pitch, client_id=client_id)
-    if v.exists():
-        v.delete()
-    else:
-        new_vote = Vote(client_id=client_id, pitch_id=pitch)
-        new_vote.save()
 
 
 @csrf_exempt
@@ -80,7 +61,7 @@ def vote(request):
 
     sid = request.session.session_key
 
-    if request.method == 'POST':
+    if request.method == 'POST' and get_mode() == 'Pitching':
         payload = json.loads(request.body)
         uuid = payload.get('pitch_uuid')
         toggle_vote(uuid, sid)
@@ -122,10 +103,9 @@ def schedule(request):
         schedule = cache_schedule
     else:
         schedule = {"slots": [
-                s.api_fields() for s
-                in Schedule.objects.all().order_by('slot__start_time')
-            ]
-        }
+            s.api_fields() for s
+            in Schedule.objects.all().order_by('slot__start_time')
+        ]}
         cache.set('schedule', schedule)
     return HttpResponse(
         json.dumps(schedule, cls=DjangoJSONEncoder),

@@ -19,7 +19,7 @@ class PitchAdmin(admin.ModelAdmin):
     actions = [collapse_pitches]
 
 
-
+admin.site.site_header = 'Unconf Admin'
 
 admin.site.register(Pitch, PitchAdmin)
 admin.site.register(Vote)
