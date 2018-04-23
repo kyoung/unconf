@@ -9628,7 +9628,7 @@ var _ksyoung$unconf$View$listSchedule = function (model) {
 										_elm_lang$html$Html$img,
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$src('/static/dodyvr-map-2018.png'),
+											_0: _elm_lang$html$Html_Attributes$src('/static/map.png'),
 											_1: {ctor: '[]'}
 										},
 										{ctor: '[]'}),

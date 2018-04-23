@@ -23,7 +23,12 @@ Time slots are input next, at `/admin/pitches/slot/`. Enter as many time slots
 as you like, with a start time and end time, in 24hr format.
 
 ## Map
-_documentation pending once this is implemented__
+To customize the map displayed to attendees once the voting is complete, you
+will want to update the file located in `./server/pitches/static/map.png` with
+your venue's map.
+
+This is a hack that will be fixed with a proper admin upload in the future, but
+for now is a quick easy way to this working.
 
 ## Pitches (aka the performative part)
 The intended flow is to transcribe the pitches as they are made and input them
@@ -46,7 +51,8 @@ simply select the two pitches, and then under the `Actions` drop down, select
 "Collapse Pitches". This will intelligently combine the set of votes, and
 concatenate the two pitches.
 
-_documentation pending on customizing the concatenation string_
+If you don't love the separator between talks when they're collapsed, see the
+envvars section of the [README](README.md).
 
 ## Setting the schedule
 As voting gets underway, you may like to begin planning the schedule. To do so

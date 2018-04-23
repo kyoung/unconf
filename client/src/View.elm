@@ -30,7 +30,7 @@ listSchedule model =
             , List.map
                 (displayTimes model.schedule)
                 times
-            , [ div [ class "schedule-map" ] [ img [ src "/static/dodyvr-map-2018.png" ] [] ] ]
+            , [ div [ class "schedule-map" ] [ img [ src "/static/map.png" ] [] ] ]
             ]
         )
 
