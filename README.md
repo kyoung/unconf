@@ -5,7 +5,6 @@ it.
 
 Once installed, you can read the [manual for operation here](MANUAL.md).
 
-
 ## Setup
 ### Requirements
 You will need Python 3.6 and Elm 0.18.0 to run this project.
@@ -82,3 +81,44 @@ attendees to prove how clever they in their ability to "beat" the app by simply
 explaining to all attendees exactly how to "cheat" and vote multiple times:
 _Clear your cookies_. Now that no one has anything to prove by "hacking" the
 app, you should be free to continue your event in peace.
+
+
+## Screenshots
+
+<style>
+img {
+  width: 45%;
+}
+</style>
+
+### Pitches
+As pitches are made, an organizer inputs the pitch into the administrative
+portal. As they are saved the client polls for new pitches and they begin to
+appear on the screen.
+
+![Pitch making](screenshots/pitches.png)
+
+___
+
+### Voting
+As an attendee votes, their selections are marked with a blue bar, and the text
+"SELECTED". Also, their "dot vote" is added to the card. Tapping on a pitch will
+unvote the topic.
+
+![Voting](screenshots/voting.png)
+
+As other members vote, the relative popularity of pitches becomes apparent, and
+dots begin to tile accross the pitch card.
+
+![Crowd votes](screenshots/all_votes.png)
+
+___
+
+### Schedule View
+Once all the voting is done, the administrator generates a schedule
+(algorithmically sorted to alot large rooms to popular talks) and switches a
+flag in the admin portal to schedule view.
+
+The lineup is displayed, along with a venue map.
+
+![schedule](screenshots/schedule.png)
