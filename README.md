@@ -85,12 +85,6 @@ app, you should be free to continue your event in peace.
 
 ## Screenshots
 
-<style>
-img {
-  width: 45%;
-}
-</style>
-
 ### Pitches
 As pitches are made, an organizer inputs the pitch into the administrative
 portal. As they are saved the client polls for new pitches and they begin to
