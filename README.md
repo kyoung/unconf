@@ -39,9 +39,10 @@ endpoint, though you will have to run the `python manage.py` commands
 **If you modify the client code, be sure to also run a `make client` to ensure
 that the modified client is compiled before you commit and push to heroku.**
 
-During our trial run with a ~300 attendee count, autoscaling nodes were able to
-handle the traffic at a peak of 6 dynos, (though obviously warming up the dynos
-will help).
+During our run with a ~400 attendee count, autoscaling nodes were able to
+handle the traffic at a peak of 3 x1 dynos, (though obviously warming up the dynos
+will help). You can probably get away with the free tier version of Heroku's
+offereing for similar or smaller events.
 
 **NB. Also consider spinning up a second free-tier version of the application
 and substitution the main app's DB string in, to use for administrative purposes
