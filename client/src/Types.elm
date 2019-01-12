@@ -22,6 +22,7 @@ type alias Slot =
     { time : String
     , room : String
     , text : String
+    , uuid : String
     }
 
 

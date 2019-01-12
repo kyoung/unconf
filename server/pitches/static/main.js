@@ -9168,9 +9168,9 @@ var _ksyoung$unconf$Types$Pitch = F4(
 	function (a, b, c, d) {
 		return {text: a, uuid: b, order: c, votes: d};
 	});
-var _ksyoung$unconf$Types$Slot = F3(
-	function (a, b, c) {
-		return {time: a, room: b, text: c};
+var _ksyoung$unconf$Types$Slot = F4(
+	function (a, b, c, d) {
+		return {time: a, room: b, text: c, uuid: d};
 	});
 var _ksyoung$unconf$Types$Model = F4(
 	function (a, b, c, d) {
@@ -9249,12 +9249,13 @@ var _ksyoung$unconf$Commands$getPitches = A2(
 	_elm_lang$http$Http$send,
 	_ksyoung$unconf$Types$GotPitches,
 	A2(_elm_lang$http$Http$get, '/pitches/', _ksyoung$unconf$Commands$decodePitches));
-var _ksyoung$unconf$Commands$decodeSlot = A4(
-	_elm_lang$core$Json_Decode$map3,
+var _ksyoung$unconf$Commands$decodeSlot = A5(
+	_elm_lang$core$Json_Decode$map4,
 	_ksyoung$unconf$Types$Slot,
 	A2(_elm_lang$core$Json_Decode$field, 'time', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'room', _elm_lang$core$Json_Decode$string),
-	A2(_elm_lang$core$Json_Decode$field, 'text', _elm_lang$core$Json_Decode$string));
+	A2(_elm_lang$core$Json_Decode$field, 'text', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'uuid', _elm_lang$core$Json_Decode$string));
 var _ksyoung$unconf$Commands$decodeSchedule = A2(
 	_elm_lang$core$Json_Decode$field,
 	'slots',
@@ -9498,48 +9499,67 @@ var _ksyoung$unconf$View$listPitches = function (model) {
 			}
 		});
 };
-var _ksyoung$unconf$View$displaySlot = function (slot) {
-	return A2(
-		_elm_lang$html$Html$div,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('slot'),
-			_1: {ctor: '[]'}
-		},
-		{
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$div,
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('slot-room'),
-					_1: {ctor: '[]'}
-				},
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html$text(slot.room),
-					_1: {ctor: '[]'}
-				}),
-			_1: {
+var _ksyoung$unconf$View$displaySlot = F2(
+	function (votes, slot) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('slot'),
+				_1: {ctor: '[]'}
+			},
+			{
 				ctor: '::',
 				_0: A2(
 					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('slot-text'),
+						_0: _elm_lang$html$Html_Attributes$class('slot-room'),
 						_1: {ctor: '[]'}
 					},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text(slot.text),
+						_0: _elm_lang$html$Html$text(slot.room),
 						_1: {ctor: '[]'}
 					}),
-				_1: {ctor: '[]'}
-			}
-		});
-};
-var _ksyoung$unconf$View$displayTimes = F2(
-	function (slots, time) {
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('slot-text'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(slot.text),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(_elm_lang$core$List$member, slot.uuid, votes) ? A2(
+							_elm_lang$html$Html$div,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class('voted-slot'),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('voted'),
+								_1: {ctor: '[]'}
+							}) : A2(
+							_elm_lang$html$Html$div,
+							{ctor: '[]'},
+							{ctor: '[]'}),
+						_1: {ctor: '[]'}
+					}
+				}
+			});
+	});
+var _ksyoung$unconf$View$displayTimes = F3(
+	function (votes, slots, time) {
 		return A2(
 			_elm_lang$html$Html$div,
 			{
@@ -9567,7 +9587,7 @@ var _ksyoung$unconf$View$displayTimes = F2(
 				},
 				A2(
 					_elm_lang$core$List$map,
-					_ksyoung$unconf$View$displaySlot,
+					_ksyoung$unconf$View$displaySlot(votes),
 					A2(
 						_elm_lang$core$List$filter,
 						function (c) {
@@ -9614,7 +9634,7 @@ var _ksyoung$unconf$View$listSchedule = function (model) {
 					ctor: '::',
 					_0: A2(
 						_elm_lang$core$List$map,
-						_ksyoung$unconf$View$displayTimes(model.schedule),
+						A2(_ksyoung$unconf$View$displayTimes, model.votes, model.schedule),
 						times),
 					_1: {
 						ctor: '::',

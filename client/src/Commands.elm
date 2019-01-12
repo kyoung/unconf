@@ -19,10 +19,11 @@ decodeSchedule =
 
 decodeSlot : Decoder Slot
 decodeSlot =
-    map3 Slot
+    map4 Slot
         (field "time" Json.Decode.string)
         (field "room" Json.Decode.string)
         (field "text" Json.Decode.string)
+        (field "uuid" Json.Decode.string)
 
 
 getPitches : Cmd Msg
