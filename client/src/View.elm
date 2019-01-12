@@ -9,11 +9,10 @@ import Types exposing (Mode(..), Model, Msg, Pitch, Slot)
 
 root : Model -> Html Msg
 root model =
-    if model.mode == Pitching then
-        div []
-            [ listPitches model ]
-    else
-        div [] [ listSchedule model ]
+    case model.mode of
+        Pitching -> div [] [ listPitches model ]
+        Schedule -> div [] [ listSchedule model ]
+        Unknown -> div [] []
 
 
 listSchedule : Model -> Html Msg
@@ -63,7 +62,7 @@ listPitches model =
     else
         div [ class "pitches" ]
             [ p [ class "no-pitches" ] [ text "No pitches yet." ]
-            , p [] [ text "Maybe talk about that time you fixed that thing?" ]
+            , p [] [ text "Maybe talk about that time you fixed that thing" ]
             ]
 
 

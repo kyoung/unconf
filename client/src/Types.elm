@@ -7,6 +7,7 @@ import Time exposing (..)
 type Mode
     = Pitching
     | Schedule
+    | Unknown
 
 
 type alias Pitch =

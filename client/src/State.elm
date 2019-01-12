@@ -6,8 +6,8 @@ import Types exposing (Mode(..), Model, Msg(..), Pitch)
 
 init : ( Model, Cmd Msg )
 init =
-    ( { pitches = [], votes = [], schedule = [], mode = Pitching }
-    , Cmd.batch [ getPitches, getVotes ]
+    ( { pitches = [], votes = [], schedule = [], mode = Unknown }
+    , Cmd.batch [ getMode, getPitches, getVotes ]
     )
 
 
