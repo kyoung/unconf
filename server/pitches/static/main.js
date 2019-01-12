@@ -9176,6 +9176,7 @@ var _ksyoung$unconf$Types$Model = F4(
 	function (a, b, c, d) {
 		return {votes: a, pitches: b, schedule: c, mode: d};
 	});
+var _ksyoung$unconf$Types$Unknown = {ctor: 'Unknown'};
 var _ksyoung$unconf$Types$Schedule = {ctor: 'Schedule'};
 var _ksyoung$unconf$Types$Pitching = {ctor: 'Pitching'};
 var _ksyoung$unconf$Types$GotSchedule = function (a) {
@@ -9344,16 +9345,20 @@ var _ksyoung$unconf$State$init = {
 		pitches: {ctor: '[]'},
 		votes: {ctor: '[]'},
 		schedule: {ctor: '[]'},
-		mode: _ksyoung$unconf$Types$Pitching
+		mode: _ksyoung$unconf$Types$Unknown
 	},
 	_1: _elm_lang$core$Platform_Cmd$batch(
 		{
 			ctor: '::',
-			_0: _ksyoung$unconf$Commands$getPitches,
+			_0: _ksyoung$unconf$Commands$getMode,
 			_1: {
 				ctor: '::',
-				_0: _ksyoung$unconf$Commands$getVotes,
-				_1: {ctor: '[]'}
+				_0: _ksyoung$unconf$Commands$getPitches,
+				_1: {
+					ctor: '::',
+					_0: _ksyoung$unconf$Commands$getVotes,
+					_1: {ctor: '[]'}
+				}
 			}
 		})
 };
@@ -9486,7 +9491,7 @@ var _ksyoung$unconf$View$listPitches = function (model) {
 					{ctor: '[]'},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text('Maybe talk about that time you fixed that thing?'),
+						_0: _elm_lang$html$Html$text('Maybe talk about that time you fixed that thing'),
 						_1: {ctor: '[]'}
 					}),
 				_1: {ctor: '[]'}
@@ -9642,21 +9647,32 @@ var _ksyoung$unconf$View$listSchedule = function (model) {
 			}));
 };
 var _ksyoung$unconf$View$root = function (model) {
-	return _elm_lang$core$Native_Utils.eq(model.mode, _ksyoung$unconf$Types$Pitching) ? A2(
-		_elm_lang$html$Html$div,
-		{ctor: '[]'},
-		{
-			ctor: '::',
-			_0: _ksyoung$unconf$View$listPitches(model),
-			_1: {ctor: '[]'}
-		}) : A2(
-		_elm_lang$html$Html$div,
-		{ctor: '[]'},
-		{
-			ctor: '::',
-			_0: _ksyoung$unconf$View$listSchedule(model),
-			_1: {ctor: '[]'}
-		});
+	var _p0 = model.mode;
+	switch (_p0.ctor) {
+		case 'Pitching':
+			return A2(
+				_elm_lang$html$Html$div,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _ksyoung$unconf$View$listPitches(model),
+					_1: {ctor: '[]'}
+				});
+		case 'Schedule':
+			return A2(
+				_elm_lang$html$Html$div,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _ksyoung$unconf$View$listSchedule(model),
+					_1: {ctor: '[]'}
+				});
+		default:
+			return A2(
+				_elm_lang$html$Html$div,
+				{ctor: '[]'},
+				{ctor: '[]'});
+	}
 };
 
 var _ksyoung$unconf$Main$subscriptions = function (model) {
