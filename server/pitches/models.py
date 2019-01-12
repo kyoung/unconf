@@ -81,7 +81,8 @@ class Schedule(models.Model):
         return {
             'text': self.pitch.text,
             'room': self.room.number,
-            'time': self.slot.start_time
+            'time': self.slot.start_time,
+            'uuid': self.pitch.uuid,
         }
 
     def __str__(self):

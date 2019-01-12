@@ -147,7 +147,7 @@ body {
 }
 
 .slot-text {
-  padding: 0 10px 0 10px;
+  padding: 0 10px 10px 10px;
   white-space: pre-wrap;
 }
 
@@ -171,4 +171,13 @@ body {
   margin-top: 20px;
   border-bottom: 1px solid #ddd;
   padding: 0 0 10px 0;
+}
+
+.voted-slot {
+  margin: 0px 10px 0 10px;
+  padding: 0 10px 0 10px;
+  background-color: #3572A5;
+  color: white;
+  border-radius: 3px;
+  display: inline;
 }

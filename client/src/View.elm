@@ -27,30 +27,36 @@ listSchedule model =
         (List.concat
             [ [ div [ class "schedule-header" ] [ text "Schedule" ] ]
             , List.map
-                (displayTimes model.schedule)
+                (displayTimes model.votes model.schedule)
                 times
             , [ div [ class "schedule-map" ] [ img [ src "/static/map.png" ] [] ] ]
             ]
         )
 
 
-displayTimes : List Slot -> String -> Html Msg
-displayTimes slots time =
+displayTimes : List String -> List Slot -> String -> Html Msg
+displayTimes votes slots time =
     div [ class "slot-time-block" ]
         (List.append
             [ div [ class "slot-time" ] [ text time ] ]
             (List.map
-                displaySlot
+                ( displaySlot votes )
                 (List.filter (\c -> c.time == time) slots)
             )
         )
 
 
-displaySlot : Slot -> Html Msg
-displaySlot slot =
+displaySlot : List String -> Slot -> Html Msg
+displaySlot votes slot =
     div [ class "slot" ]
         [ div [ class "slot-room" ] [ text slot.room ]
         , div [ class "slot-text" ] [ text slot.text ]
+        , (
+            if List.member slot.uuid votes then
+                div [ class "voted-slot" ] [ text "voted" ]
+            else
+                div [] []
+          )
         ]
 
 

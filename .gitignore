@@ -4,3 +4,4 @@ venv
 elm-stuff
 .ropeproject
 .DS_Store
+.vscode
