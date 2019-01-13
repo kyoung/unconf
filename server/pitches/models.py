@@ -91,9 +91,7 @@ class Schedule(models.Model):
         '''
         Given two talks, swap their time/location...
         '''
-        original_pitch = self.pitch
-        self.pitch = other.pitch
-        other.pitch = original_pitch
+        self.pitch, other.pitch = other.pitch, self.pitch
         self.save()
         other.save()
 
