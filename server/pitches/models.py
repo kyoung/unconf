@@ -87,6 +87,16 @@ class Schedule(models.Model):
             'author': self.pitch.author,
         }
 
+    def swap(self, other):
+        '''
+        Given two talks, swap their time/location...
+        '''
+        original_pitch = self.pitch
+        self.pitch = other.pitch
+        other.pitch = original_pitch
+        self.save()
+        other.save()
+
     def __str__(self):
         return f'Room: {self.room} ({self.slot}): {self.pitch} - {self.pitch.author}'
 
