@@ -1,7 +1,7 @@
 module Commands exposing (..)
 
 import Http
-import Json.Decode exposing (Decoder, field, int, list, map3, map4, string)
+import Json.Decode exposing (Decoder, field, int, list, map3, map4, map5, string)
 import Json.Encode exposing (encode, object, string)
 import Types exposing (Mode(..), Model, Msg(..), Pitch, Slot)
 
@@ -19,11 +19,12 @@ decodeSchedule =
 
 decodeSlot : Decoder Slot
 decodeSlot =
-    map4 Slot
+    map5 Slot
         (field "time" Json.Decode.string)
         (field "room" Json.Decode.string)
         (field "text" Json.Decode.string)
         (field "uuid" Json.Decode.string)
+        (field "author" Json.Decode.string)
 
 
 getPitches : Cmd Msg
@@ -39,11 +40,12 @@ decodePitches =
 
 decodePitch : Decoder Pitch
 decodePitch =
-    map4 Pitch
+    map5 Pitch
         (field "text" Json.Decode.string)
         (field "uuid" Json.Decode.string)
         (field "order" int)
         (field "votes" int)
+        (field "author" Json.Decode.string)
 
 
 getMode : Cmd Msg

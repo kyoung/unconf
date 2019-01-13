@@ -38,6 +38,11 @@ body {
   white-space: pre-wrap;
 }
 
+.pitch-author {
+  font-size: 0.8em;
+  color: #666;
+}
+
 @keyframes pitch-in {
   0% {
     transform: scale(0.1);
@@ -167,6 +172,12 @@ body {
   font-size: 0.8em;
   color: #666;
   padding: 0 10px 0 10px;
+}
+
+.slot-speaker {
+  padding: 0 10px 10px 10px;
+  font-size: 0.8em;
+  color: #666;
 }
 
 .slot {

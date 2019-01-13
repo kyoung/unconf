@@ -30,7 +30,7 @@ update action model =
             ( model, castVote uuid )
 
         PostedVote (Ok votes) ->
-            ( { model | votes = votes }, Cmd.none )
+            ( { model | votes = votes }, getVotes )
 
         PostedVote (Err _) ->
             ( model, Cmd.none )

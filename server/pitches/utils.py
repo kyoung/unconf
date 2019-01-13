@@ -1,7 +1,54 @@
+from collections import defaultdict
+
 from django.core.cache import cache
 from django.db.models import Count
 
 from .models import Pitch, Vote, Schedule, Slot, Room, Flag
+
+
+class SpeakerCollisionBuffer:
+
+    def __init__(self, pitches):
+        """
+        Takes a Pitch QuerySet Iterator, and helps fetch a next-most
+        voted talk while avoiding a speaker collision.
+        """
+        self._pitches = pitches
+        self._collision_tracker = defaultdict(list)
+        self._buffered_pitches = []
+
+    def _is_already_speaking(self, speaker, slot):
+        return speaker in self._collision_tracker[str(slot)]
+
+    def get_next(self, slot):
+        # drain any buffered pitches
+        if ( self._buffered_pitches and not 
+             self._is_already_speaking(self._buffered_pitches[0].author, slot)):
+            talk = self._buffered_pitches[0]
+            self._buffered_pitches = self._buffered_pitches[1:]
+            return talk
+
+        # pull next pitch from original iterator
+        while True:
+            talk = next(self._pitches, None)
+
+            # exhausted the iterator
+            if not talk:
+                return None
+
+            # exit early if no author... can't be helped
+            if not talk.author:
+                return talk
+
+            # check if already speaking
+            if talk.author and self._is_already_speaking(talk.author, slot):
+                self._buffered_pitches.append(talk)
+                continue
+
+            # record the speaker
+            self._collision_tracker[str(slot)].append(talk.author)
+
+            return talk
 
 
 def reschedule():
@@ -20,9 +67,10 @@ def reschedule():
     )
     slots = Slot.objects.all().order_by('start_time')
     rooms = Room.objects.all().order_by('-capacity')
+    pitch_collision_buffer = SpeakerCollisionBuffer(pitches)
     for room in rooms:
         for slot in slots:
-            pitch = next(pitches, None)
+            pitch = pitch_collision_buffer.get_next(slot)
             if not pitch:
                 return
             s = Schedule(pitch=pitch, room=room, slot=slot)
