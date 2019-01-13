@@ -97,6 +97,15 @@ def set_schedule(request):
     return render(request, 'pitches/templates/schedule_admin.html.tmpl', ctx)
 
 
+def twitter_schedule(request):
+    cached_twitter_schedule = cache.get('twitter_schedule', None)
+    if not cached_twitter_schedule:
+        cached_twitter_schedule = {"slots": Slot.objects.all().order_by('start_time')}
+        cache.set('twitter_schedule', cached_twitter_schedule)
+    ctx = cached_twitter_schedule
+    return render(request, 'pitches/templates/twitter_schedule.html.tmpl', ctx)
+
+
 def schedule(request):
     cache_schedule = cache.get('schedule', None)
     if cache_schedule:
