@@ -1,0 +1,22 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>unconf - schedule</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+  <div class='schedule'>
+    {% for slot in slots %}
+      <h2>{{ slot }}</h2>
+      <ul>
+      {% for talk in slot.schedule_set.all %}
+        <li>{{ talk }}</li>
+      {% endfor %}
+    </ul>
+    {% endfor %}
+    <img src="{% static 'map.png' %}" alt="Map of venue">
+  </div>
+</body>
+</html>
