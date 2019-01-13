@@ -28,6 +28,7 @@ class Pitch(models.Model):
             'order': order,
             'uuid': self.uuid,
             'votes': self.vote_set.count(),
+            'author': self.author,
         }
 
     def merge(self, other):
@@ -83,10 +84,11 @@ class Schedule(models.Model):
             'room': self.room.number,
             'time': self.slot.start_time,
             'uuid': self.pitch.uuid,
+            'author': self.pitch.author,
         }
 
     def __str__(self):
-        return f'Room: {self.room} ({self.slot}): {self.pitch}'
+        return f'Room: {self.room} ({self.slot}): {self.pitch} - {self.pitch.author}'
 
 
 class Flag(models.Model):

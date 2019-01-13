@@ -16,12 +16,12 @@
       {% endfor %}
     </ul>
     {% endfor %}
+    <div class='reflow'>
+      <form method='post'>
+        {% csrf_token %}
+        <input class="input-button" type="submit" value="Reshuffle the schedule">
+      </form>
   </div>
-  <div class='reflow'>
-    <form method='post'>
-      {% csrf_token %}
-      <input class="input-button" type="submit" value="Reshuffle the schedule">
-    </form>
   </div>
 </body>
 </html>

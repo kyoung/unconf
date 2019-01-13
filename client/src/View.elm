@@ -51,6 +51,7 @@ displaySlot votes slot =
     div [ class "slot" ]
         [ div [ class "slot-room" ] [ text slot.room ]
         , div [ class "slot-text" ] [ text slot.text ]
+        , div [ class "slot-speaker" ] [ text ("Pitched by: " ++ slot.author) ]
         , (
             if List.member slot.uuid votes then
                 div [ class "voted-slot" ] [ text "voted" ]
@@ -94,6 +95,7 @@ pitchElement votes pitch =
                 text ""
             ]
         , p [] [ text pitch.text ]
+        , p [ class "pitch-author" ] [ text ("Pitched by: " ++ pitch.author ) ]
         , div [ class "voting-dots" ] (List.map voteDot (List.repeat pitch.votes ""))
         ]
 

@@ -15,6 +15,7 @@ type alias Pitch =
     , uuid : String
     , order : Int
     , votes : Int
+    , author : String
     }
 
 
@@ -23,6 +24,7 @@ type alias Slot =
     , room : String
     , text : String
     , uuid : String
+    , author : String
     }
 
 

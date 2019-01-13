@@ -9164,13 +9164,13 @@ var _elm_lang$http$Http$StringPart = F2(
 	});
 var _elm_lang$http$Http$stringPart = _elm_lang$http$Http$StringPart;
 
-var _ksyoung$unconf$Types$Pitch = F4(
-	function (a, b, c, d) {
-		return {text: a, uuid: b, order: c, votes: d};
+var _ksyoung$unconf$Types$Pitch = F5(
+	function (a, b, c, d, e) {
+		return {text: a, uuid: b, order: c, votes: d, author: e};
 	});
-var _ksyoung$unconf$Types$Slot = F4(
-	function (a, b, c, d) {
-		return {time: a, room: b, text: c, uuid: d};
+var _ksyoung$unconf$Types$Slot = F5(
+	function (a, b, c, d, e) {
+		return {time: a, room: b, text: c, uuid: d, author: e};
 	});
 var _ksyoung$unconf$Types$Model = F4(
 	function (a, b, c, d) {
@@ -9234,13 +9234,14 @@ var _ksyoung$unconf$Commands$getMode = A2(
 	_elm_lang$http$Http$send,
 	_ksyoung$unconf$Types$GotMode,
 	A2(_elm_lang$http$Http$get, '/pitches/mode/', _ksyoung$unconf$Commands$decodeMode));
-var _ksyoung$unconf$Commands$decodePitch = A5(
-	_elm_lang$core$Json_Decode$map4,
+var _ksyoung$unconf$Commands$decodePitch = A6(
+	_elm_lang$core$Json_Decode$map5,
 	_ksyoung$unconf$Types$Pitch,
 	A2(_elm_lang$core$Json_Decode$field, 'text', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'uuid', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'order', _elm_lang$core$Json_Decode$int),
-	A2(_elm_lang$core$Json_Decode$field, 'votes', _elm_lang$core$Json_Decode$int));
+	A2(_elm_lang$core$Json_Decode$field, 'votes', _elm_lang$core$Json_Decode$int),
+	A2(_elm_lang$core$Json_Decode$field, 'author', _elm_lang$core$Json_Decode$string));
 var _ksyoung$unconf$Commands$decodePitches = A2(
 	_elm_lang$core$Json_Decode$field,
 	'pitches',
@@ -9249,13 +9250,14 @@ var _ksyoung$unconf$Commands$getPitches = A2(
 	_elm_lang$http$Http$send,
 	_ksyoung$unconf$Types$GotPitches,
 	A2(_elm_lang$http$Http$get, '/pitches/', _ksyoung$unconf$Commands$decodePitches));
-var _ksyoung$unconf$Commands$decodeSlot = A5(
-	_elm_lang$core$Json_Decode$map4,
+var _ksyoung$unconf$Commands$decodeSlot = A6(
+	_elm_lang$core$Json_Decode$map5,
 	_ksyoung$unconf$Types$Slot,
 	A2(_elm_lang$core$Json_Decode$field, 'time', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'room', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'text', _elm_lang$core$Json_Decode$string),
-	A2(_elm_lang$core$Json_Decode$field, 'uuid', _elm_lang$core$Json_Decode$string));
+	A2(_elm_lang$core$Json_Decode$field, 'uuid', _elm_lang$core$Json_Decode$string),
+	A2(_elm_lang$core$Json_Decode$field, 'author', _elm_lang$core$Json_Decode$string));
 var _ksyoung$unconf$Commands$decodeSchedule = A2(
 	_elm_lang$core$Json_Decode$field,
 	'slots',
@@ -9306,7 +9308,7 @@ var _ksyoung$unconf$State$update = F2(
 						_0: _elm_lang$core$Native_Utils.update(
 							model,
 							{votes: _p0._0._0}),
-						_1: _elm_lang$core$Platform_Cmd$none
+						_1: _ksyoung$unconf$Commands$getVotes
 					};
 				} else {
 					return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
@@ -9430,17 +9432,33 @@ var _ksyoung$unconf$View$pitchElement = F2(
 						_1: {
 							ctor: '::',
 							_0: A2(
-								_elm_lang$html$Html$div,
+								_elm_lang$html$Html$p,
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$class('voting-dots'),
+									_0: _elm_lang$html$Html_Attributes$class('pitch-author'),
 									_1: {ctor: '[]'}
 								},
-								A2(
-									_elm_lang$core$List$map,
-									_ksyoung$unconf$View$voteDot,
-									A2(_elm_lang$core$List$repeat, pitch.votes, ''))),
-							_1: {ctor: '[]'}
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text(
+										A2(_elm_lang$core$Basics_ops['++'], 'Pitched by: ', pitch.author)),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$div,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('voting-dots'),
+										_1: {ctor: '[]'}
+									},
+									A2(
+										_elm_lang$core$List$map,
+										_ksyoung$unconf$View$voteDot,
+										A2(_elm_lang$core$List$repeat, pitch.votes, ''))),
+								_1: {ctor: '[]'}
+							}
 						}
 					}
 				}
@@ -9538,22 +9556,38 @@ var _ksyoung$unconf$View$displaySlot = F2(
 						}),
 					_1: {
 						ctor: '::',
-						_0: A2(_elm_lang$core$List$member, slot.uuid, votes) ? A2(
+						_0: A2(
 							_elm_lang$html$Html$div,
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class('voted-slot'),
+								_0: _elm_lang$html$Html_Attributes$class('slot-speaker'),
 								_1: {ctor: '[]'}
 							},
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html$text('voted'),
+								_0: _elm_lang$html$Html$text(
+									A2(_elm_lang$core$Basics_ops['++'], 'Pitched by: ', slot.author)),
 								_1: {ctor: '[]'}
-							}) : A2(
-							_elm_lang$html$Html$div,
-							{ctor: '[]'},
-							{ctor: '[]'}),
-						_1: {ctor: '[]'}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(_elm_lang$core$List$member, slot.uuid, votes) ? A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('voted-slot'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('voted'),
+									_1: {ctor: '[]'}
+								}) : A2(
+								_elm_lang$html$Html$div,
+								{ctor: '[]'},
+								{ctor: '[]'}),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			});
