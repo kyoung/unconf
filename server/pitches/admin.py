@@ -13,8 +13,8 @@ collapse_pitches.short_description = 'Collapse pitches'
 
 class PitchAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {'fields': ['text']}),
-        ('Details', {'fields': ['created_at', 'author', 'uuid']}),
+        (None, {'fields': ['text', 'author']}),
+        ('Details', {'fields': ['created_at', 'uuid']}),
     ]
     actions = [collapse_pitches]
 

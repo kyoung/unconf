@@ -28,7 +28,7 @@ class Pitch(models.Model):
             'order': order,
             'uuid': self.uuid,
             'votes': self.vote_set.count(),
-            'author': self.author,
+            'author': self.author or '-',  # can't be nothing for Elm
         }
 
     def merge(self, other):
