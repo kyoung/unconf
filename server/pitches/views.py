@@ -10,7 +10,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Pitch, Vote, Schedule, Slot, Flag
-from .utils import reschedule, get_mode, toggle_vote
+from .utils import reschedule, get_mode, get_order_value, toggle_vote
 
 
 def index(request):
@@ -23,10 +23,10 @@ def index(request):
         pitches = [
             p.api_fields(order=i)
             for i, p
-            in enumerate(Pitch.objects.order_by('created_at'))
+            in enumerate(Pitch.objects.order_by(get_order_value()))
         ]
         cache.set('pitches', pitches)
-    response = {'pitches': pitches}
+    response = {'pitches': pitches, 'mode': get_order_value()}
     return HttpResponse(
         json.dumps(response, cls=DjangoJSONEncoder),
         content_type='application/json')

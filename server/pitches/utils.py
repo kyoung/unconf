@@ -94,20 +94,40 @@ def heal_flags():
     '''
     Did you accidentally delete the flag?
     '''
+    Flag.objects.delete()
     mode_flag = Flag(name='Allow Pitches', enabled=True)
     mode_flag.save()
+    sort_flag = Flag(name='Sort Pitches Date Descending', enabled=False)
+    sort_flag.save()
 
 
 def get_mode():
     cache_mode = cache.get('mode', None)
     if cache_mode:
-        mode = cache_mode
-    else:
-        try:
-            flag = Flag.objects.get(name='Allow Pitches')
-            mode = 'Pitching' if flag.enabled else 'Schedule'
-        except Flag.DoesNotExist:
-            heal_flags()
-            mode = 'Pitching'
-        cache.set('mode', mode)
+        return cache_mode
+
+    try:
+        flag = Flag.objects.get(name='Allow Pitches')
+        mode = 'Pitching' if flag.enabled else 'Schedule'
+    except Flag.DoesNotExist:
+        heal_flags()
+        mode = 'Pitching'
+    
+    cache.set('mode', mode)
     return mode
+
+
+def get_order_value():
+    cache_order_key = cache.get('order_key', None)
+    if cache_order_key:
+        return cache_order_key
+
+    try:
+        flag = Flag.objects.get(name='Sort Pitches Date Descending')
+        order_key = '-created_at' if flag.enabled else 'created_at'
+    except Flag.DoesNotExist:
+        heal_flags()
+        order_key = 'created_at'
+
+    cache.set('order_key', order_key)
+    return order_key
