@@ -19,11 +19,23 @@ class PitchAdmin(admin.ModelAdmin):
     actions = [collapse_pitches]
 
 
+def swap_talks(model_admin, request, talk_set):
+    if len(talk_set) != 2:
+        # Do nothing; undefined behaviour
+        return
+    talk_set[0].swap(talk_set[1])
+swap_talks.short_description = 'Swap talks'
+
+
+class ScheduleAdmin(admin.ModelAdmin):
+    actions = [swap_talks]
+
+
 admin.site.site_header = 'Unconf Admin'
 
 admin.site.register(Pitch, PitchAdmin)
 admin.site.register(Vote)
 admin.site.register(Slot)
 admin.site.register(Room)
-admin.site.register(Schedule)
+admin.site.register(Schedule, ScheduleAdmin)
 admin.site.register(Flag)
