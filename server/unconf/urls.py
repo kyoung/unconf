@@ -17,9 +17,11 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import TemplateView
 
+import pitches
+
 
 urlpatterns = [
     url(r'^pitches/', include('pitches.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^$', TemplateView.as_view(template_name='index.html.tmpl')),
+    url(r'^$', pitches.views.index),
 ]

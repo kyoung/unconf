@@ -14,6 +14,17 @@ from .utils import reschedule, get_mode, get_order_value, toggle_vote
 
 
 def index(request):
+    ua = request.META['HTTP_USER_AGENT']
+    if 'Twitterbot' in ua:
+        mode = get_mode()
+        if mode == 'Schedule':
+            return twitter_schedule(request)
+        else:
+            return render(request, 'pitches/templates/twitter_index.html.tmpl')
+    return render(request, 'index.html.tmpl')
+
+
+def pitches(request):
     # we order on the server side to spare ourselves the pain of parsing dates
     # in Elm on the client side
     cache_pitches = cache.get('pitches', None)
