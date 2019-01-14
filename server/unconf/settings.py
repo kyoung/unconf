@@ -35,11 +35,6 @@ ALLOWED_HOSTS = [
     host,
 ]
 
-
-# Pitch order mode allows alternative ordering schemes for way pitches are presented
-PITCH_ORDERING = os.getenv('PITCH_ORDERING', 'date_ascending')
-
-
 # Application definition
 
 INSTALLED_APPS = [
