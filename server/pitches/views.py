@@ -15,7 +15,6 @@ from .utils import reschedule, get_mode, get_order_value, toggle_vote
 
 def index(request):
     ua = request.META['HTTP_USER_AGENT']
-    print(ua)
     if 'Twitterbot' in ua:
         mode = get_mode()
         if mode == 'Schedule':
