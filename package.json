@@ -1,0 +1,23 @@
+{
+  "name": "unconf",
+  "version": "1.0.0",
+  "description": "For those times we all said… 'why isnt't there an app for this?'",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kyoung/unconf.git"
+  },
+  "author": "kyoung",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kyoung/unconf/issues"
+  },
+  "homepage": "https://github.com/kyoung/unconf#readme",
+  "dependencies": {
+    "elm": "^0.19.0-bugfix6",
+    "elm-format": "^0.8.1"
+  }
+}
