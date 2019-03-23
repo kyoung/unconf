@@ -1,6 +1,6 @@
-module Main exposing (..)
+module Main exposing (main, subscriptions)
 
-import Html exposing (program)
+import Browser exposing (element)
 import State
 import Time exposing (..)
 import Types exposing (Model, Msg(..))
@@ -9,12 +9,12 @@ import View
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Time.every (Time.second * 2) UpdateMode
+    Time.every 2000 UpdateMode
 
 
-main : Program Never Model Msg
+main : Program () Model Msg
 main =
-    program
+    element
         { init = State.init
         , update = State.update
         , subscriptions = subscriptions

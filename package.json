@@ -4,7 +4,10 @@
   "description": "For those times we all said… 'why isnt't there an app for this?'",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "elm": "node_modules/.bin/elm",
+    "elm-make": "elm make client/src/Main.elm --output=server/pitches/static/main.js",
+    "elm-reactor": "elm reactor --port=3000",
+    "elm-format": "node_modules/.bin/elm-format"
   },
   "repository": {
     "type": "git",
