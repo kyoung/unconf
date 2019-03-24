@@ -7,7 +7,7 @@ Once installed, you can read the [manual for operation here](MANUAL.md).
 
 ## Setup
 ### Requirements
-You will need Python 3.6 and Elm 0.18.0 to run this project.
+You will need Python 3.6 and Elm 0.19.0 to run this project.
 
 `make local` should configure your Python virtual environment in `venv` and
 install the required packages, as well as download the Elm packages required.
@@ -29,6 +29,8 @@ Django administration:
 `make client` will compile the elm source and move the result into the
 appropriate static asset folder for the server. You'll likely end up doing this
 often during development.
+
+If you're running a Node environment, you can run `npm run elm-make` instead.
 
 ## Production
 unconf is currently configured to run on Heroku (if there's interest, I'll
