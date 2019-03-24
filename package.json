@@ -7,7 +7,8 @@
     "elm": "node_modules/.bin/elm",
     "elm-make": "elm make client/src/Main.elm --optimize --output=server/pitches/static/main.js",
     "elm-reactor": "elm reactor --port=3000",
-    "elm-format": "node_modules/.bin/elm-format"
+    "elm-format": "node_modules/.bin/elm-format",
+    "elm-watch": "chokidar 'client/src/*.elm' -c 'elm make client/src/Main.elm --optimize --output=server/pitches/static/main.js' --initial"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   },
   "homepage": "https://github.com/kyoung/unconf#readme",
   "dependencies": {
+    "chokidar-cli": "^1.2.2",
     "elm": "^0.19.0-bugfix6",
     "elm-format": "^0.8.1"
   }
