@@ -1,6 +1,6 @@
 module View exposing (displaySlot, displayTimes, listPitches, listSchedule, pitchElement, root, voteDot)
 
-import Html exposing (Html, div, img, p, span, text)
+import Html exposing (Html, div, img, p, span, text, h1, h3, ul, li)
 import Html.Attributes exposing (class, src)
 import Html.Events exposing (onClick)
 import Set
@@ -72,9 +72,9 @@ listPitches model =
             (List.map (pitchElement model.votes) (List.sortBy .order model.pitches))
 
     else
-        div [ class "pitches" ]
-            [ p [ class "no-pitches" ] [ text "No pitches yet." ]
-            , p [] [ text "Maybe talk about that time you fixed that thing" ]
+        div [ class "no-pitches" ]
+            [ h1 [ class "no-pitches__title" ] [ text "No pitches yet." ]
+            , p [ class "no-pitches__text" ] [ text "Maybe talk about that time you fixed that thing?" ]
             ]
 
 
@@ -87,26 +87,19 @@ pitchElement votes pitch =
         [ div
             [ class
                 (if List.member pitch.uuid votes then
-                    "selected"
+                    "pitch__selected"
 
                  else
-                    "unselected"
+                    "pitch__unselected"
                 )
             ]
             []
-        , span [ class "select-notice" ]
-            [ if List.member pitch.uuid votes then
-                text "selected"
-
-              else
-                text ""
-            ]
-        , p [] [ text pitch.text ]
-        , p [ class "pitch-author" ] [ text ("Pitched by: " ++ pitch.author) ]
-        , div [ class "voting-dots" ] (List.map voteDot (List.repeat pitch.votes ""))
+        , h3 [ class "pitch__title" ] [ text pitch.text ]
+        , p [ class "pitch__author" ] [ text ("Pitched by " ++ pitch.author) ]
+        , ul [ class "votes" ] (List.map voteDot (List.repeat pitch.votes ""))
         ]
 
 
 voteDot : String -> Html Msg
 voteDot vote =
-    span [ class "vote-dots" ] [ text "⬤" ]
+    li [ class "votes__dots" ] []

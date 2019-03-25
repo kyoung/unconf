@@ -6263,9 +6263,7 @@ var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 			return 3;
 	}
 };
-var elm$html$Html$span = _VirtualDom_node('span');
-var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
+var elm$html$Html$li = _VirtualDom_node('li');
 var elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
 		return A2(
@@ -6276,15 +6274,12 @@ var elm$html$Html$Attributes$stringProperty = F2(
 var elm$html$Html$Attributes$class = elm$html$Html$Attributes$stringProperty('className');
 var author$project$View$voteDot = function (vote) {
 	return A2(
-		elm$html$Html$span,
+		elm$html$Html$li,
 		_List_fromArray(
 			[
-				elm$html$Html$Attributes$class('vote-dots')
+				elm$html$Html$Attributes$class('votes__dots')
 			]),
-		_List_fromArray(
-			[
-				elm$html$Html$text('⬤')
-			]));
+		_List_Nil);
 };
 var elm$core$List$any = F2(
 	function (isOkay, list) {
@@ -6338,7 +6333,11 @@ var elm$core$List$repeat = F2(
 		return A3(elm$core$List$repeatHelp, _List_Nil, n, value);
 	});
 var elm$html$Html$div = _VirtualDom_node('div');
+var elm$html$Html$h3 = _VirtualDom_node('h3');
 var elm$html$Html$p = _VirtualDom_node('p');
+var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
+var elm$html$Html$ul = _VirtualDom_node('ul');
 var elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 0, a: a};
 };
@@ -6373,22 +6372,15 @@ var author$project$View$pitchElement = F2(
 					_List_fromArray(
 						[
 							elm$html$Html$Attributes$class(
-							A2(elm$core$List$member, pitch.au, votes) ? 'selected' : 'unselected')
+							A2(elm$core$List$member, pitch.au, votes) ? 'pitch__selected' : 'pitch__unselected')
 						]),
 					_List_Nil),
 					A2(
-					elm$html$Html$span,
+					elm$html$Html$h3,
 					_List_fromArray(
 						[
-							elm$html$Html$Attributes$class('select-notice')
+							elm$html$Html$Attributes$class('pitch__title')
 						]),
-					_List_fromArray(
-						[
-							A2(elm$core$List$member, pitch.au, votes) ? elm$html$Html$text('selected') : elm$html$Html$text('')
-						])),
-					A2(
-					elm$html$Html$p,
-					_List_Nil,
 					_List_fromArray(
 						[
 							elm$html$Html$text(pitch.at)
@@ -6397,17 +6389,17 @@ var author$project$View$pitchElement = F2(
 					elm$html$Html$p,
 					_List_fromArray(
 						[
-							elm$html$Html$Attributes$class('pitch-author')
+							elm$html$Html$Attributes$class('pitch__author')
 						]),
 					_List_fromArray(
 						[
-							elm$html$Html$text('Pitched by: ' + pitch.V)
+							elm$html$Html$text('Pitched by ' + pitch.V)
 						])),
 					A2(
-					elm$html$Html$div,
+					elm$html$Html$ul,
 					_List_fromArray(
 						[
-							elm$html$Html$Attributes$class('voting-dots')
+							elm$html$Html$Attributes$class('votes')
 						]),
 					A2(
 						elm$core$List$map,
@@ -6416,6 +6408,7 @@ var author$project$View$pitchElement = F2(
 				]));
 	});
 var elm$core$List$sortBy = _List_sortBy;
+var elm$html$Html$h1 = _VirtualDom_node('h1');
 var author$project$View$listPitches = function (model) {
 	return (elm$core$List$length(model.ah) > 0) ? A2(
 		elm$html$Html$div,
@@ -6435,15 +6428,15 @@ var author$project$View$listPitches = function (model) {
 		elm$html$Html$div,
 		_List_fromArray(
 			[
-				elm$html$Html$Attributes$class('pitches')
+				elm$html$Html$Attributes$class('no-pitches')
 			]),
 		_List_fromArray(
 			[
 				A2(
-				elm$html$Html$p,
+				elm$html$Html$h1,
 				_List_fromArray(
 					[
-						elm$html$Html$Attributes$class('no-pitches')
+						elm$html$Html$Attributes$class('no-pitches__title')
 					]),
 				_List_fromArray(
 					[
@@ -6451,10 +6444,13 @@ var author$project$View$listPitches = function (model) {
 					])),
 				A2(
 				elm$html$Html$p,
-				_List_Nil,
 				_List_fromArray(
 					[
-						elm$html$Html$text('Maybe talk about that time you fixed that thing')
+						elm$html$Html$Attributes$class('no-pitches__text')
+					]),
+				_List_fromArray(
+					[
+						elm$html$Html$text('Maybe talk about that time you fixed that thing?')
 					]))
 			]));
 };
