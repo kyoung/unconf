@@ -6456,6 +6456,16 @@ var author$project$View$listPitches = function (model) {
 };
 var author$project$View$displaySlot = F2(
 	function (votes, slot) {
+		var votedMeta = A2(elm$core$List$member, slot.au, votes) ? A2(
+			elm$html$Html$li,
+			_List_fromArray(
+				[
+					elm$html$Html$Attributes$class('slot__voted')
+				]),
+			_List_fromArray(
+				[
+					elm$html$Html$text('')
+				])) : elm$html$Html$text('');
 		return A2(
 			elm$html$Html$div,
 			_List_fromArray(
@@ -6468,42 +6478,50 @@ var author$project$View$displaySlot = F2(
 					elm$html$Html$div,
 					_List_fromArray(
 						[
-							elm$html$Html$Attributes$class('slot-room')
+							elm$html$Html$Attributes$class(
+							A2(elm$core$List$member, slot.au, votes) ? 'slot__selected' : 'slot__unselected')
 						]),
-					_List_fromArray(
-						[
-							elm$html$Html$text(slot.aP)
-						])),
+					_List_Nil),
 					A2(
 					elm$html$Html$div,
 					_List_fromArray(
 						[
-							elm$html$Html$Attributes$class('slot-text')
+							elm$html$Html$Attributes$class('slot__title')
 						]),
 					_List_fromArray(
 						[
 							elm$html$Html$text(slot.at)
 						])),
 					A2(
-					elm$html$Html$div,
+					elm$html$Html$ul,
 					_List_fromArray(
 						[
-							elm$html$Html$Attributes$class('slot-speaker')
+							elm$html$Html$Attributes$class('slot__meta')
 						]),
 					_List_fromArray(
 						[
-							elm$html$Html$text('Pitched by: ' + slot.V)
-						])),
-					A2(elm$core$List$member, slot.au, votes) ? A2(
-					elm$html$Html$div,
-					_List_fromArray(
-						[
-							elm$html$Html$Attributes$class('voted-slot')
-						]),
-					_List_fromArray(
-						[
-							elm$html$Html$text('voted')
-						])) : A2(elm$html$Html$div, _List_Nil, _List_Nil)
+							votedMeta,
+							A2(
+							elm$html$Html$li,
+							_List_fromArray(
+								[
+									elm$html$Html$Attributes$class('slot__room')
+								]),
+							_List_fromArray(
+								[
+									elm$html$Html$text(slot.aP)
+								])),
+							A2(
+							elm$html$Html$li,
+							_List_fromArray(
+								[
+									elm$html$Html$Attributes$class('slot__author')
+								]),
+							_List_fromArray(
+								[
+									elm$html$Html$text('Pitched by ' + slot.V)
+								]))
+						]))
 				]));
 	});
 var elm$core$List$append = F2(
@@ -6531,7 +6549,7 @@ var author$project$View$displayTimes = F3(
 			elm$html$Html$div,
 			_List_fromArray(
 				[
-					elm$html$Html$Attributes$class('slot-time-block')
+					elm$html$Html$Attributes$class('schedule__time')
 				]),
 			A2(
 				elm$core$List$append,
@@ -6541,7 +6559,7 @@ var author$project$View$displayTimes = F3(
 						elm$html$Html$div,
 						_List_fromArray(
 							[
-								elm$html$Html$Attributes$class('slot-time')
+								elm$html$Html$Attributes$class('schedule__time-banner')
 							]),
 						_List_fromArray(
 							[
@@ -6599,10 +6617,10 @@ var author$project$View$listSchedule = function (model) {
 					_List_fromArray(
 					[
 						A2(
-						elm$html$Html$div,
+						elm$html$Html$h1,
 						_List_fromArray(
 							[
-								elm$html$Html$Attributes$class('schedule-header')
+								elm$html$Html$Attributes$class('schedule__title')
 							]),
 						_List_fromArray(
 							[
@@ -6619,10 +6637,20 @@ var author$project$View$listSchedule = function (model) {
 						elm$html$Html$div,
 						_List_fromArray(
 							[
-								elm$html$Html$Attributes$class('schedule-map')
+								elm$html$Html$Attributes$class('schedule__map')
 							]),
 						_List_fromArray(
 							[
+								A2(
+								elm$html$Html$h1,
+								_List_fromArray(
+									[
+										elm$html$Html$Attributes$class('schedule__title')
+									]),
+								_List_fromArray(
+									[
+										elm$html$Html$text('Map')
+									])),
 								A2(
 								elm$html$Html$img,
 								_List_fromArray(

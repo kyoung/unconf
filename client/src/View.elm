@@ -1,6 +1,6 @@
 module View exposing (displaySlot, displayTimes, listPitches, listSchedule, pitchElement, root, voteDot)
 
-import Html exposing (Html, div, img, p, span, text, h1, h3, ul, li)
+import Html exposing (Html, div, h1, h3, img, li, p, strong, text, ul)
 import Html.Attributes exposing (class, src)
 import Html.Events exposing (onClick)
 import Set
@@ -30,20 +30,24 @@ listSchedule model =
     in
     div [ class "schedule" ]
         (List.concat
-            [ [ div [ class "schedule-header" ] [ text "Schedule" ] ]
+            [ [ h1 [ class "schedule__title" ] [ text "Schedule" ] ]
             , List.map
                 (displayTimes model.votes model.schedule)
                 times
-            , [ div [ class "schedule-map" ] [ img [ src "/static/map.png" ] [] ] ]
+            , [ div [ class "schedule__map" ]
+                    [ h1 [ class "schedule__title" ] [ text "Map" ]
+                    , img [ src "/static/map.png" ] []
+                    ]
+              ]
             ]
         )
 
 
 displayTimes : List String -> List Slot -> String -> Html Msg
 displayTimes votes slots time =
-    div [ class "slot-time-block" ]
+    div [ class "schedule__time" ]
         (List.append
-            [ div [ class "slot-time" ] [ text time ] ]
+            [ div [ class "schedule__time-banner" ] [ text time ] ]
             (List.map
                 (displaySlot votes)
                 (List.filter (\c -> c.time == time) slots)
@@ -53,15 +57,31 @@ displayTimes votes slots time =
 
 displaySlot : List String -> Slot -> Html Msg
 displaySlot votes slot =
-    div [ class "slot" ]
-        [ div [ class "slot-room" ] [ text slot.room ]
-        , div [ class "slot-text" ] [ text slot.text ]
-        , div [ class "slot-speaker" ] [ text ("Pitched by: " ++ slot.author) ]
-        , if List.member slot.uuid votes then
-            div [ class "voted-slot" ] [ text "voted" ]
+    let
+        votedMeta =
+            if List.member slot.uuid votes then
+                li [ class "slot__voted" ] [ text "" ]
 
-          else
-            div [] []
+            else
+                text ""
+    in
+    div [ class "slot" ]
+        [ div
+            [ class
+                (if List.member slot.uuid votes then
+                    "slot__selected"
+
+                 else
+                    "slot__unselected"
+                )
+            ]
+            []
+        , div [ class "slot__title" ] [ text slot.text ]
+        , ul [ class "slot__meta" ]
+            [ votedMeta
+            , li [ class "slot__room" ] [ text slot.room ]
+            , li [ class "slot__author" ] [ text ("Pitched by " ++ slot.author) ]
+            ]
         ]
 
 

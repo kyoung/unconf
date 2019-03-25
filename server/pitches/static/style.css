@@ -19,6 +19,7 @@
   --color-purple: hsl(233, 43%, 44%);
   --color-yellow: hsl(44, 100%, 50%);
   --color-green: hsl(72, 63%, 51%);
+  --color-blue-light: hsl(184, 87%, 90%);
   --color-blue: hsl(188, 57%, 53%);
   --color-red: hsl(16, 100%, 50%);
   --color-grey-light: hsl(210, 28%, 88%);
@@ -34,6 +35,9 @@
   --pitch-selected-color: var(--color-yellow);
 
   --dot-color: var(--color-blue);
+
+  --time-slot-background-color: var(--color-blue);
+  --time-slot-text-color: var(--color-blue-light);
 
   --shadow-box: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 
@@ -65,7 +69,7 @@ html {
 }
 
 body {
-  padding: var(--space-xl) var(--space-lg);
+  padding: var(--space-lg);
   color: var(--text-color);
   background-color: var(--body-color);
   margin: 0;
@@ -80,6 +84,11 @@ p, h1, h3, ul, li {
   margin: 0;
 }
 
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
 /*********************************************************/
 /* Pitches */
 /*********************************************************/
@@ -90,10 +99,11 @@ p, h1, h3, ul, li {
   grid-gap: var(--space-md);
 }
 
-.pitch {
+.pitch,
+.slot {
   padding: var(--space-md);
   box-shadow: var(--shadow-box);
-  background-color: var(--color-white);
+  background-color: var(--pitch-background-color);
   cursor: pointer;
 
   animation: pitch-in 300ms ease-in;
@@ -126,21 +136,20 @@ p, h1, h3, ul, li {
 }
 
 .pitch__unselected,
-.pitch__selected {
+.pitch__selected,
+.slot__unselected,
+.slot__selected {
   margin: calc(var(--space-md) * -1) calc(var(--space-md) * -1) var(--space-md);
 }
 
-.pitch__unselected {
+.pitch__unselected,
+.slot__unselected {
   border-top: var(--space-xs) solid var(--pitch-background-color);
 }
 
-.pitch__selected {
+.pitch__selected,
+.slot__selected {
   border-top: var(--space-xs) solid var(--pitch-selected-color);
-}
-
-.votes {
-  list-style: none;
-  padding-left: 0;
 }
 
 .votes__dots {
@@ -170,6 +179,115 @@ p, h1, h3, ul, li {
 /* Schedule */
 /*********************************************************/
 
+.schedule {
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.schedule__title {
+  font-size: var(--font-xl);
+  font-weight: 900;
+  margin-bottom: var(--space-lg);
+}
+
+.slot {
+  margin-bottom: var(--space-md);
+}
+
+.slot__title {
+  font-size: var(--font-lg);
+  margin-bottom: var(--space-xs);
+  color: var(--pitch-title-color);
+  font-weight: 900;
+}
+
+.slot__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.slot__meta li {
+  flex: 0 0 auto;
+  min-width: 0;
+  margin-right: var(--space-sm);
+  font-size: var(--font-sm);
+  color: var(--pitch-author-color);
+}
+
+.slot__meta li:last-of-type {
+  margin-right: 0;
+}
+
+.slot__room {
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.slot__voted {
+  background-color: var(--pitch-selected-color);
+  border-radius: 50%;
+  line-height: 1;
+  height: var(--font-md);
+  width: var(--font-md);
+}
+
+.schedule__time {
+  margin-bottom: var(--space-xl);
+}
+
+.schedule__time-banner {
+  display: flex;
+  color: var(--time-slot-text-color);
+  margin-bottom: var(--space-sm);
+
+  animation: time-slot-in 300ms ease-in;
+}
+
+.schedule__time-banner::before,
+.schedule__time-banner::after {
+  content: '';
+  display: block;
+  height: var(--font-md);
+  background-color: var(--time-slot-background-color);
+}
+
+.schedule__time-banner::before {
+  flex: 0 0 auto;
+  margin-right: var(--space-sm);
+  width: var(--space-md);
+}
+
+.schedule__time-banner::after {
+  flex: 1 1 auto;
+  margin-left: var(--space-sm);
+}
+
+
+@keyframes time-slot-in {
+  0% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 1;
+  }
+}
+
+.schedule__map {
+  width: 100%;
+}
+
+.schedule__map img {
+  width: 100%;
+  box-shadow: var(--shadow-box);
+  background-color: var(--pitch-background-color);
+}
+
+/*********************************************************/
+/* Admin area */
+/*********************************************************/
+
 .input-button {
   cursor: pointer;
   border: 1px solid #999;
@@ -179,67 +297,4 @@ p, h1, h3, ul, li {
 
 .input-button:hover {
   color: black;
-}
-
-.schedule {
-  display: flex;
-  flex-direction: column;
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-.schedule-header {
-  font-size: 2em;
-  font-style: bold;
-  padding: 0 10px 0 10px;
-}
-
-.schedule-map {
-  width: 100%;
-}
-
-.schedule-map img {
-  width: 100%;
-}
-
-.slot-text {
-  padding: 0 10px 10px 10px;
-  white-space: pre-wrap;
-}
-
-.slot-time-block {
-  margin-top: 40px;
-}
-
-.slot-time {
-  background-color: #333;
-  color: white;
-  padding: 0 10px 0 10px;
-}
-
-.slot-room {
-  font-size: 0.8em;
-  color: #666;
-  padding: 0 10px 0 10px;
-}
-
-.slot-speaker {
-  padding: 0 10px 10px 10px;
-  font-size: 0.8em;
-  color: #666;
-}
-
-.slot {
-  margin-top: 20px;
-  border-bottom: 1px solid #ddd;
-  padding: 0 0 10px 0;
-}
-
-.voted-slot {
-  margin: 0px 10px 0 10px;
-  padding: 0 10px 0 10px;
-  background-color: #3572A5;
-  color: white;
-  border-radius: 3px;
-  display: inline;
 }
