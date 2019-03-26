@@ -93,21 +93,18 @@ As pitches are made, an organizer inputs the pitch into the administrative
 portal. As they are saved the client polls for new pitches and they begin to
 appear on the screen.
 
-![Pitch making](screenshots/pitches.png)
+![Empty state](screenshots/no_pitches.png)
 
 ___
 
 ### Voting
-As an attendee votes, their selections are marked with a blue bar, and the text
-"SELECTED". Also, their "dot vote" is added to the card. Tapping on a pitch will
-unvote the topic.
-
-![Voting](screenshots/voting.png)
-
-As other members vote, the relative popularity of pitches becomes apparent, and
-dots begin to tile accross the pitch card.
+As an attendee votes, their selections are marked by their yellow voting dot and
+a yellow bar on the top of the pitch. Tapping on a pitch will unvote the topic.
 
 ![Crowd votes](screenshots/all_votes.png)
+
+As other members vote, the relative popularity of pitches becomes apparent as
+indicated by blue dots across the pitch card.
 
 ___
 
