@@ -1,11 +1,11 @@
-module State exposing (..)
+module State exposing (init, update)
 
 import Commands exposing (castVote, getMode, getPitches, getSchedule, getVotes)
 import Types exposing (Mode(..), Model, Msg(..), Pitch)
 
 
-init : ( Model, Cmd Msg )
-init =
+init : () -> ( Model, Cmd Msg )
+init _ =
     ( { pitches = [], votes = [], schedule = [], mode = Unknown }
     , Cmd.batch [ getMode, getPitches, getVotes ]
     )
@@ -43,12 +43,14 @@ update action model =
                 newMode =
                     if mode == "Schedule" then
                         Schedule
+
                     else
                         Pitching
             in
             ( { model | mode = newMode }
             , if newMode == Pitching then
                 getPitches
+
               else
                 getSchedule
             )

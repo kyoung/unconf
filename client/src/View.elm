@@ -1,4 +1,4 @@
-module View exposing (..)
+module View exposing (displaySlot, displayTimes, listPitches, listSchedule, pitchElement, root, voteDot)
 
 import Html exposing (Html, div, img, p, span, text)
 import Html.Attributes exposing (class, src)
@@ -10,9 +10,14 @@ import Types exposing (Mode(..), Model, Msg, Pitch, Slot)
 root : Model -> Html Msg
 root model =
     case model.mode of
-        Pitching -> div [] [ listPitches model ]
-        Schedule -> div [] [ listSchedule model ]
-        Unknown -> div [] []
+        Pitching ->
+            div [] [ listPitches model ]
+
+        Schedule ->
+            div [] [ listSchedule model ]
+
+        Unknown ->
+            div [] []
 
 
 listSchedule : Model -> Html Msg
@@ -40,7 +45,7 @@ displayTimes votes slots time =
         (List.append
             [ div [ class "slot-time" ] [ text time ] ]
             (List.map
-                ( displaySlot votes )
+                (displaySlot votes)
                 (List.filter (\c -> c.time == time) slots)
             )
         )
@@ -52,12 +57,11 @@ displaySlot votes slot =
         [ div [ class "slot-room" ] [ text slot.room ]
         , div [ class "slot-text" ] [ text slot.text ]
         , div [ class "slot-speaker" ] [ text ("Pitched by: " ++ slot.author) ]
-        , (
-            if List.member slot.uuid votes then
-                div [ class "voted-slot" ] [ text "voted" ]
-            else
-                div [] []
-          )
+        , if List.member slot.uuid votes then
+            div [ class "voted-slot" ] [ text "voted" ]
+
+          else
+            div [] []
         ]
 
 
@@ -66,6 +70,7 @@ listPitches model =
     if List.length model.pitches > 0 then
         div [ class "pitches" ]
             (List.map (pitchElement model.votes) (List.sortBy .order model.pitches))
+
     else
         div [ class "pitches" ]
             [ p [ class "no-pitches" ] [ text "No pitches yet." ]
@@ -83,6 +88,7 @@ pitchElement votes pitch =
             [ class
                 (if List.member pitch.uuid votes then
                     "selected"
+
                  else
                     "unselected"
                 )
@@ -91,11 +97,12 @@ pitchElement votes pitch =
         , span [ class "select-notice" ]
             [ if List.member pitch.uuid votes then
                 text "selected"
+
               else
                 text ""
             ]
         , p [] [ text pitch.text ]
-        , p [ class "pitch-author" ] [ text ("Pitched by: " ++ pitch.author ) ]
+        , p [ class "pitch-author" ] [ text ("Pitched by: " ++ pitch.author) ]
         , div [ class "voting-dots" ] (List.map voteDot (List.repeat pitch.votes ""))
         ]
 

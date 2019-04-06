@@ -1,4 +1,4 @@
-module Types exposing (..)
+module Types exposing (Mode(..), Model, Msg(..), Pitch, Slot)
 
 import Http
 import Time exposing (..)
@@ -42,6 +42,6 @@ type Msg
     | PostVote String
     | PostedVote (Result Http.Error (List String))
       --| UpdatePitches
-    | UpdateMode Time
+    | UpdateMode Time.Posix
     | GotMode (Result Http.Error String)
     | GotSchedule (Result Http.Error (List Slot))
