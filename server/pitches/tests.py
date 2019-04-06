@@ -21,23 +21,23 @@ class SchedulingTestCases(TestCase):
         Room.objects.create(number='C101', capacity=110)
         Room.objects.create(number='C102', capacity=120)
         
-        self.a_talks = 4
-        self.a_popularity_bump = 5
-        for i in range(self.a_talks):
+    def test_reschedule_with_authors(self):
+        a_talks = 4
+        a_popularity_bump = 5
+        for i in range(a_talks):
             p = Pitch.objects.create(text=f'a{i}', author='A')
-            for j in range(i+self.a_popularity_bump):
+            for j in range(i+a_popularity_bump):
                 Vote.objects.create(client_id=rand_id(), pitch_id=p)
         
-        self.b_talks = 3
-        for i in range(self.b_talks):
+        b_talks = 3
+        for i in range(b_talks):
             Pitch.objects.create(text=f'a{i}', author='B')
             Vote.objects.create(client_id=rand_id(), pitch_id=p)
 
-        self.c_talks = 5
-        for i in range(self.c_talks):
+        c_talks = 5
+        for i in range(c_talks):
             Pitch.objects.create(text=f'c{i}', author='C')
-
-    def test_reschedule(self):
+        
         reschedule()
 
         # there are more talks than rooms x slots, so there should be nine bookings
@@ -58,4 +58,15 @@ class SchedulingTestCases(TestCase):
         # 3 of the unpopular 'c' talks should have been picked
         booked_c_talks = Schedule.objects.filter(pitch__author='C')
         self.assertEqual(booked_c_talks.count(), 3)
-        
+
+    def test_reschedule_without_authors(self):
+        for i in range(10):
+            p = Pitch.objects.create(text=f'talk {i}')
+            for j in range(i):
+                Vote.objects.create(client_id=rand_id(), pitch_id=p)
+
+        reschedule()
+
+        # author booking checks shouldn't be performed if author is left blank
+        all_bookings = Schedule.objects.all()
+        self.assertEqual(all_bookings.count(), 9)
