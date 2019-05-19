@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "elm": "node_modules/.bin/elm",
+    "elm-format": "node_modules/.bin/elm-format",
     "elm-make": "elm make client/src/Main.elm --optimize --output=server/pitches/static/main.js",
     "elm-reactor": "elm reactor --port=3000",
-    "elm-format": "node_modules/.bin/elm-format",
     "elm-watch": "chokidar 'client/src/*.elm' -c 'npm run elm-make' --initial",
-    "server": "json-server ./json-server/db.json -r ./json-server/routes.json --static ./server/pitches/static --middlewares ./json-server/voting-post.js ./json-server/voting-delete.js -i uuid -w -p 3000",
-    "start": "npm run elm-watch & npm run server"
+    "pitching": "npm run elm-watch & npm run server-pitching",
+    "schedule": "npm run elm-watch & npm run server-schedule",
+    "server-pitching": "json-server ./json-server/db.json -r ./json-server/routes-pitching.json --static ./server/pitches/static --middlewares ./json-server/voting-post.js ./json-server/voting-delete.js -i uuid -w -p 3000",
+    "server-schedule": "json-server ./json-server/db.json -r ./json-server/routes-schedule.json --static ./server/pitches/static --middlewares ./json-server/voting-post.js ./json-server/voting-delete.js -i uuid -w -p 3000"
   },
   "repository": {
     "type": "git",

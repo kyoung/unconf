@@ -39,8 +39,8 @@ useful for working on Elm or CSS independently and uses
 [json-server](https://github.com/typicode/json-server) to mock the database.
 
 1. run `npm install` in your CLI to install Elm and JSON server
-1. Duplicate `./json-server/db.sample.json` as `./json-server/db.json`
-1. run `npm start` and navigate to `localhost:3000`
+1. Duplicate the sample dataset with `cp ./json-server/db.sample.json ./json-server/db.json`
+1. run `npm run pitching` or `npm run schedule` and navigate to `localhost:3000`
 
 #### JSON Server
 JSON Server mocks the SQLLite DB Python interacts with. You can add and remove
@@ -53,11 +53,7 @@ There are two distinct modes in Unconf: **Pitching** and **Schedule**. In
 Pitching you'll see all the available pitches and votes, whereas Schedule
 arranges the pitches into a schedule.
 
-The app starts in Pitching mode. To change it to Schedule:
-
-1. Open `./json-server/routes.json`
-1. Change `"/pitches/mode": "/modes/0",` to `"/pitches/mode": "/modes/1",`,
-where `0` maps to the Pitching UUID, and `1` maps to the Schedule UUID.
+To select a mode, run either `npm run pitching` or `npm run schedule`.
 
 #### JSON Server: Pitches
 You can add and remove any pitches in `.json-server/db.json`. Pitches require
@@ -78,7 +74,7 @@ return the single pitch. (There's no Elm view, so you'll get a JSON page.)
 
 Instead of deleting pitches, you can easily _hide_ them from the app by:
 
-1. Opening `./json-server/routes.json`
+1. Opening `./json-server/routes-pitching.json`
 1. Changing `"/pitches": "/db",` to `"/pitches": "/",`, which will cause the
 JSON decoder to _fail_, effectively hiding all the pitches.
 
@@ -112,7 +108,7 @@ return the single slot. (There's no Elm view, so you'll get a JSON page.)
 
 Instead of deleting pitches, you can easily _hide_ them from the app by:
 
-1. Opening `./json-server/routes.json`
+1. Opening `./json-server/routes-schedule.json`
 1. Changing `"/pitches/schedule": "/db"` to `"/pitches/schedule": "/`, which
 will cause the JSON decoder to _fail_, effectively hiding the schedule.
 
