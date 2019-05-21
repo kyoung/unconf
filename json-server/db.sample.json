@@ -1,0 +1,76 @@
+{
+  "modes": [
+    {
+      "uuid": 0,
+      "mode": "Pitching"
+    },
+    {
+      "uuid": 1,
+      "mode": "Schedule"
+    }
+  ],
+  "pitches": [
+    {
+      "text": "JavaScript State of the Union",
+      "uuid": "a097c86f-bb8d-4c64-8c6a-edd5e90b157d",
+      "order": 1,
+      "votes": 0,
+      "author": "Chris"
+    },
+    {
+      "text": "Learning to Learn",
+      "uuid": "05223a39-6d54-4cfb-8c48-c2a8dc14b9f1",
+      "order": 2,
+      "votes": 8,
+      "author": "Anita"
+    },
+    {
+      "text": "Web Security 101",
+      "uuid": "f33db885-cb08-4b62-b5ee-29709237a3c7",
+      "order": 3,
+      "votes": 5,
+      "author": "Sai"
+    },
+    {
+      "text": "Technical Debt",
+      "uuid": "de49a4ad-6a5b-4bcd-bbc2-86a1399dfe5f",
+      "order": 4,
+      "votes": 1,
+      "author": "Holly"
+    }
+  ],
+  "votes": [
+    "05223a39-6d54-4cfb-8c48-c2a8dc14b9f1",
+    "f33db885-cb08-4b62-b5ee-29709237a3c7"
+  ],
+  "slots": [
+    {
+      "time": "10:30",
+      "room": "c300",
+      "text": "JavaScript State of the Union",
+      "uuid": "a097c86f-bb8d-4c64-8c6a-edd5e90b157d",
+      "author": "Chris"
+    },
+    {
+      "time": "10:30",
+      "room": "c100",
+      "text": "Learning to Learn",
+      "uuid": "05223a39-6d54-4cfb-8c48-c2a8dc14b9f1",
+      "author": "Anita"
+    },
+    {
+      "time": "2:30",
+      "room": "c180",
+      "text": "Web Security 101",
+      "uuid": "f33db885-cb08-4b62-b5ee-29709237a3c7",
+      "author": "Sai"
+    },
+    {
+      "time": "3:30",
+      "room": "c300",
+      "text": "Technical Debt",
+      "uuid": "de49a4ad-6a5b-4bcd-bbc2-86a1399dfe5f",
+      "author": "Holly"
+    }
+  ]
+}
