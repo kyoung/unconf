@@ -2,7 +2,7 @@ SHELL := /bin/bash
 
 .PHONY: client
 client:
-	node_modules/.bin/elm make client/src/Main.elm --output=server/pitches/static/main.js
+	node_modules/.bin/elm make client/src/Main.elm --optimize --output=server/pitches/static/main.js
 
 .PHONY: local
 local:
