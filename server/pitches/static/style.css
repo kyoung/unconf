@@ -18,10 +18,8 @@
   --color-white: hsl(0, 100%, 100%);
   --color-purple: hsl(233, 43%, 44%);
   --color-yellow: hsl(44, 100%, 50%);
-  --color-green: hsl(72, 63%, 51%);
   --color-blue-light: hsl(184, 87%, 90%);
   --color-blue: hsl(188, 57%, 53%);
-  --color-red: hsl(16, 100%, 50%);
   --color-grey-light: hsl(210, 28%, 88%);
   --color-grey: hsl(213, 8%, 54%);
   --color-grey-dark: hsl(213, 18%, 34%);
@@ -29,14 +27,14 @@
   --body-color: var(--color-grey-dark);
   --text-color: var(--color-grey-light);
 
-  --pitch-background-color: var(--color-white);
-  --pitch-title-color: var(--color-purple);
-  --pitch-author-color: var(--color-grey);
-  --pitch-selected-color: var(--color-yellow);
+  --card-background-color: var(--color-white);
+  --card-title-color: var(--color-purple);
+  --card-author-color: var(--color-grey);
+  --card-selected-color: var(--color-yellow);
 
-  --dot-color: var(--color-blue);
+  --vote-dot-color: var(--color-blue);
 
-  --time-slot-background-color: var(--color-blue);
+  --time-slot-banner-color: var(--color-blue);
   --time-slot-text-color: var(--color-blue-light);
 
   --shadow-box: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
@@ -103,7 +101,7 @@ ul {
 .slot {
   padding: var(--space-md);
   box-shadow: var(--shadow-box);
-  background-color: var(--pitch-background-color);
+  background-color: var(--card-background-color);
   cursor: pointer;
 
   animation: pitch-in 300ms ease-in;
@@ -125,13 +123,13 @@ ul {
 .pitch__title {
   font-size: var(--font-lg);
   margin-bottom: var(--space-xs);
-  color: var(--pitch-title-color);
+  color: var(--card-title-color);
   font-weight: 900;
 }
 
 .pitch__author {
   font-size: var(--font-sm);
-  color: var(--pitch-author-color);
+  color: var(--card-author-color);
   margin-bottom: var(--space-md);
 }
 
@@ -144,18 +142,18 @@ ul {
 
 .pitch__unselected,
 .slot__unselected {
-  border-top: var(--space-xs) solid var(--pitch-background-color);
+  border-top: var(--space-xs) solid var(--card-background-color);
 }
 
 .pitch__selected,
 .slot__selected {
-  border-top: var(--space-xs) solid var(--pitch-selected-color);
+  border-top: var(--space-xs) solid var(--card-selected-color);
 }
 
 .votes__dots {
   display: inline-block;
-  background-color: var(--dot-color);
-  color: var(--dot-color);
+  background-color: var(--vote-dot-color);
+  color: var(--vote-dot-color);
   border-radius: 50%;
   height: var(--font-sm);
   width: var(--font-sm);
@@ -163,7 +161,7 @@ ul {
 }
 
 .pitch__selected ~ .votes .votes__dots:last-of-type {
-  background-color: var(--pitch-selected-color);
+  background-color: var(--card-selected-color);
 }
 
 .no-pitches__title {
@@ -198,7 +196,7 @@ ul {
 .slot__title {
   font-size: var(--font-lg);
   margin-bottom: var(--space-xs);
-  color: var(--pitch-title-color);
+  color: var(--card-title-color);
   font-weight: 900;
 }
 
@@ -213,7 +211,7 @@ ul {
   min-width: 0;
   margin-right: var(--space-sm);
   font-size: var(--font-sm);
-  color: var(--pitch-author-color);
+  color: var(--card-author-color);
 }
 
 .slot__meta li:last-of-type {
@@ -226,7 +224,7 @@ ul {
 }
 
 .slot__voted {
-  background-color: var(--pitch-selected-color);
+  background-color: var(--card-selected-color);
   border-radius: 50%;
   line-height: 1;
   height: var(--font-md);
@@ -250,7 +248,7 @@ ul {
   content: '';
   display: block;
   height: var(--font-md);
-  background-color: var(--time-slot-background-color);
+  background-color: var(--time-slot-banner-color);
 }
 
 .schedule__time-banner::before {
@@ -281,7 +279,7 @@ ul {
 .schedule__map img {
   width: 100%;
   box-shadow: var(--shadow-box);
-  background-color: var(--pitch-background-color);
+  background-color: var(--card-background-color);
 }
 
 /*********************************************************/

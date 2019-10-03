@@ -112,6 +112,27 @@ Instead of deleting pitches, you can easily _hide_ them from the app by:
 1. Changing `"/pitches/schedule": "/db"` to `"/pitches/schedule": "/`, which
 will cause the JSON decoder to _fail_, effectively hiding the schedule.
 
+## Colour Theming
+unconf is set up to easily theme the application with your own colours. The
+first lines of `/server/pitches/static/style.css/` contain [CSS Custom
+Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*) (often called
+css variables), that colour the entire app.
+
+The following are the variables that control the theme colour:
+
+- `--body-color`: body background colour
+- `--text-color`: body text colour, which doesn't appear on cards
+- `--card-background-color`: pitches and schedule card background colour
+- `--card-title-color`: for the pitch title/headline on card
+- `--card-author-color`: for author and room on card
+- `--card-selected-color`: the bar and vote dot colour when the current user has voted for it
+- `--vote-dot-color`: the vote dot colour, signaling when other users have voted for it
+- `--time-slot-banner-color`: the banner breaking up schedule
+- `--time-slot-text-color`: the time between the banner on the schedule
+- `--shadow-box`: shadow applied the the card and map image
+
+![schedule](screenshots/css-variables.png)
+
 ## Production
 unconf is currently configured to run on Heroku (if there's interest, I'll
 throw a Docker build in as well). It can be deployed as is to a heroku git
