@@ -2,8 +2,8 @@
 
 Unconf is designed for unconference / openspaces style pitching and voting, as
 well room and schedule management, as an improvement over sticky notes and
-sharpie markers. In order to use it you'll need to install on heroku (or a
-deployment option of your choice), initialize it as described in the
+sharpie markers. In order to use it you'll need to deploy it (Railway is the
+default target — see the README), initialize it as described in the
 [README](README.md), and configure it, as described here.
 
 Using the superuser you created during configuration, log into the

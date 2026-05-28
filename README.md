@@ -134,23 +134,40 @@ The following are the variables that control the theme colour:
 ![schedule](screenshots/css-variables.png)
 
 ## Production
-unconf is currently configured to run on Heroku (if there's interest, I'll
-throw a Docker build in as well). It can be deployed as is to a heroku git
-endpoint, though you will have to run the `python manage.py` commands
-`migrate`, `loaddata`, and `createsuperuser` to get the DB configured.
+unconf is configured to run on [Railway](https://railway.app). The repo's
+`Procfile` declares the `web` and `release` processes, and `runtime.txt` pins
+the Python version Nixpacks should build with.
 
 **If you modify the client code, be sure to also run a `make client` to ensure
-that the modified client is compiled before you commit and push to heroku.**
+that the modified client is compiled before you commit and push to Railway.**
 
-During our run with a ~400 attendee count, autoscaling nodes were able to
-handle the traffic at a peak of 3 x1 dynos, (though obviously warming up the dynos
-will help). You can probably get away with the free tier version of Heroku's
-offereing for similar or smaller events.
+### Deploying to Railway
+1. Create a new Railway project and connect this Git repo (or point Railway at
+   a fork). Railway will pick up `Procfile`, `requirements.txt`, and
+   `runtime.txt` automatically.
+2. Add the **Postgres** plugin to the project. Railway will inject
+   `DATABASE_URL` into the web service automatically — link the plugin to the
+   service if it isn't already.
+3. Set the environment variables listed below on the web service.
+4. Deploy. On each deploy the `release` process runs `manage.py migrate`
+   before the web process starts.
+5. One-time, after the first successful deploy, open a shell into the service
+   (`railway run` from the CLI, or the "shell" tab in the Railway dashboard)
+   and seed the initial data:
+   ```
+   python server/manage.py loaddata
+   python server/manage.py createsuperuser
+   ```
 
-**NB. Also consider spinning up a second free-tier version of the application
-and substitution the main app's DB string in, to use for administrative purposes
-like entering the pitches. This will save you any lag in input flow in the event
-that your attendees flood the main web nodes.**
+During our original ~400 attendee run on Heroku, autoscaling handled peaks at
+3 x1 dynos. Railway's equivalent is to bump the service's replica count and
+resource size if you expect similar load; for smaller events the default
+instance is usually plenty.
+
+**NB. Also consider spinning up a second copy of the service against the same
+Postgres plugin to use for administrative purposes like entering pitches. This
+will save you any lag in input flow in the event that your attendees flood the
+main web service.**
 
 
 ### Environment Variables
@@ -162,12 +179,13 @@ really ought to set this to help it do that. A long random string will do.
 Please set to `False` in production.
 
 #### HOSTNAME
-Django only allows a select list of hostnames. Set this to lock it down to
-exactly your app's name, or to `0.0.0.0` to allow any hostnames.
+Django only allows a select list of hostnames. Railway's `RAILWAY_PUBLIC_DOMAIN`
+is trusted automatically, so this is only needed if you've attached a custom
+domain — set it to that domain (or `0.0.0.0` to allow any hostnames).
 
 #### DATABASE_URL
-This should be set automatically by Heroku when Postgres is added. Leave it
-empty for local dev to get Djano to use a local SQLite3.
+This is set automatically by Railway when the Postgres plugin is linked to the
+service. Leave it empty for local dev to get Django to use a local SQLite3.
 
 #### COLLAPSE_SEPARATOR
 If you don't fancy the `-` string that appears between two pitches when they

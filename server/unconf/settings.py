@@ -31,9 +31,18 @@ SECRET_KEY = os.getenv(
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 host = os.getenv('HOSTNAME', '127.0.0.1')
-ALLOWED_HOSTS = [
-    host,
-]
+ALLOWED_HOSTS = [host]
+
+# Railway injects RAILWAY_PUBLIC_DOMAIN at runtime — trust it without
+# requiring an explicit HOSTNAME override.
+railway_domain = os.getenv('RAILWAY_PUBLIC_DOMAIN')
+if railway_domain:
+    ALLOWED_HOSTS.append(railway_domain)
+    CSRF_TRUSTED_ORIGINS = [f'https://{railway_domain}']
+
+# Railway terminates TLS at its edge proxy; trust the forwarded scheme so
+# Django generates correct https:// URLs and lets secure cookies through.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Application definition
 
