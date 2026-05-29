@@ -134,9 +134,13 @@ The following are the variables that control the theme colour:
 ![schedule](screenshots/css-variables.png)
 
 ## Production
-unconf is configured to run on [Railway](https://railway.app). The repo's
-`Procfile` declares the `web` and `release` processes, and `runtime.txt` pins
-the Python version Nixpacks should build with.
+unconf is configured to run on [Railway](https://railway.app). The repo
+ships:
+
+- `Procfile` — declares the gunicorn `web` process.
+- `railway.json` — runs `collectstatic` during build and `migrate` as a
+  `preDeployCommand` before each new release goes live.
+- `runtime.txt` — pins the Python version Railpack should build with.
 
 **If you modify the client code, be sure to also run a `make client` to ensure
 that the modified client is compiled before you commit and push to Railway.**
@@ -149,8 +153,9 @@ that the modified client is compiled before you commit and push to Railway.**
    `DATABASE_URL` into the web service automatically — link the plugin to the
    service if it isn't already.
 3. Set the environment variables listed below on the web service.
-4. Deploy. On each deploy the `release` process runs `manage.py migrate`
-   before the web process starts.
+4. Deploy. On each deploy Railway runs `manage.py collectstatic` during build
+   and `manage.py migrate` as the pre-deploy command before the web process
+   takes traffic.
 5. One-time, after the first successful deploy, open a shell into the service
    (`railway run` from the CLI, or the "shell" tab in the Railway dashboard)
    and seed the initial data:
