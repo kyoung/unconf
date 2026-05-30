@@ -94,7 +94,7 @@ def heal_flags():
     '''
     Did you accidentally delete the flag?
     '''
-    Flag.objects.delete()
+    Flag.objects.all().delete()
     mode_flag = Flag(name='Allow Pitches', enabled=True)
     mode_flag.save()
     sort_flag = Flag(name='Sort Pitches Date Descending', enabled=False)
